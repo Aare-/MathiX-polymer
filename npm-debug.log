@@ -1,0 +1,122 @@
+0 info it worked if it ends with ok
+1 verbose cli [ 'C:\\Program Files\\nodejs\\\\node.exe',
+1 verbose cli   'C:\\Program Files\\nodejs\\node_modules\\npm\\bin\\npm-cli.js',
+1 verbose cli   'install' ]
+2 info using npm@1.4.28
+3 info using node@v0.10.33
+4 verbose node symlink C:\Program Files\nodejs\\node.exe
+5 warn package.json MathiX_mentor@0.0.1 No repository field.
+6 warn package.json MathiX_mentor@0.0.1 No README data
+7 verbose readDependencies using package.json deps
+8 verbose install where, deps [ 'C:\\Users\\fblos_000\\Projekty\\UJ\\Interfejsy\\angular',
+8 verbose install   [ 'angular', 'express', 'passport', 'less' ] ]
+9 info preinstall MathiX_mentor@0.0.1
+10 verbose readDependencies using package.json deps
+11 verbose already installed skipping angular@^1.3.8 C:\Users\fblos_000\Projekty\UJ\Interfejsy\angular
+12 verbose already installed skipping express@^4.10.6 C:\Users\fblos_000\Projekty\UJ\Interfejsy\angular
+13 verbose already installed skipping passport@^0.2.1 C:\Users\fblos_000\Projekty\UJ\Interfejsy\angular
+14 verbose cache add [ 'less@^0.0.1', null ]
+15 verbose cache add name=undefined spec="less@^0.0.1" args=["less@^0.0.1",null]
+16 verbose parsed url { protocol: null,
+16 verbose parsed url   slashes: null,
+16 verbose parsed url   auth: null,
+16 verbose parsed url   host: null,
+16 verbose parsed url   port: null,
+16 verbose parsed url   hostname: null,
+16 verbose parsed url   hash: null,
+16 verbose parsed url   search: null,
+16 verbose parsed url   query: null,
+16 verbose parsed url   pathname: 'less@^0.0.1',
+16 verbose parsed url   path: 'less@^0.0.1',
+16 verbose parsed url   href: 'less@^0.0.1' }
+17 verbose cache add name="less" spec="^0.0.1" args=["less","^0.0.1"]
+18 verbose parsed url { protocol: null,
+18 verbose parsed url   slashes: null,
+18 verbose parsed url   auth: null,
+18 verbose parsed url   host: null,
+18 verbose parsed url   port: null,
+18 verbose parsed url   hostname: null,
+18 verbose parsed url   hash: null,
+18 verbose parsed url   search: null,
+18 verbose parsed url   query: null,
+18 verbose parsed url   pathname: '^0.0.1',
+18 verbose parsed url   path: '^0.0.1',
+18 verbose parsed url   href: '^0.0.1' }
+19 verbose addNamed [ 'less', '^0.0.1' ]
+20 verbose addNamed [ null, '=0.0.1' ]
+21 silly lockFile 7b651964-less-0-0-1 less@^0.0.1
+22 verbose lock less@^0.0.1 C:\Users\fblos_000\AppData\Roaming\npm-cache\7b651964-less-0-0-1.lock
+23 silly addNameRange { name: 'less', range: '=0.0.1', hasData: false }
+24 verbose registry.get https://registry.npmjs.org/less not expired, no request
+25 silly addNameRange number 2 { name: 'less', range: '=0.0.1', hasData: true }
+26 silly addNameRange versions [ 'less',
+26 silly addNameRange   [ '1.0.10',
+26 silly addNameRange     '1.0.11',
+26 silly addNameRange     '1.0.14',
+26 silly addNameRange     '1.0.18',
+26 silly addNameRange     '1.0.19',
+26 silly addNameRange     '1.0.21',
+26 silly addNameRange     '1.0.32',
+26 silly addNameRange     '1.0.36',
+26 silly addNameRange     '1.0.5',
+26 silly addNameRange     '1.0.40',
+26 silly addNameRange     '1.0.41',
+26 silly addNameRange     '1.0.44',
+26 silly addNameRange     '1.1.0',
+26 silly addNameRange     '1.1.1',
+26 silly addNameRange     '1.1.2',
+26 silly addNameRange     '1.1.4',
+26 silly addNameRange     '1.1.5',
+26 silly addNameRange     '1.1.6',
+26 silly addNameRange     '1.2.0',
+26 silly addNameRange     '1.2.1',
+26 silly addNameRange     '1.2.2',
+26 silly addNameRange     '1.3.0',
+26 silly addNameRange     '1.3.1',
+26 silly addNameRange     '1.3.2',
+26 silly addNameRange     '1.3.3',
+26 silly addNameRange     '1.4.0-b1',
+26 silly addNameRange     '1.4.0-b2',
+26 silly addNameRange     '1.4.0-b3',
+26 silly addNameRange     '1.4.0-b4',
+26 silly addNameRange     '1.4.0',
+26 silly addNameRange     '1.4.1',
+26 silly addNameRange     '1.4.2',
+26 silly addNameRange     '1.5.0-b1',
+26 silly addNameRange     '1.5.0-b2',
+26 silly addNameRange     '1.5.0-b3',
+26 silly addNameRange     '1.5.0-b4',
+26 silly addNameRange     '1.5.0',
+26 silly addNameRange     '1.5.1',
+26 silly addNameRange     '1.6.0',
+26 silly addNameRange     '1.6.1',
+26 silly addNameRange     '1.6.2',
+26 silly addNameRange     '1.6.3',
+26 silly addNameRange     '1.7.0',
+26 silly addNameRange     '1.7.1',
+26 silly addNameRange     '1.7.3',
+26 silly addNameRange     '1.7.4',
+26 silly addNameRange     '1.7.5',
+26 silly addNameRange     '2.0.0-b1',
+26 silly addNameRange     '2.0.0-b2',
+26 silly addNameRange     '2.0.0-b3',
+26 silly addNameRange     '2.0.0',
+26 silly addNameRange     '2.1.0',
+26 silly addNameRange     '2.1.1',
+26 silly addNameRange     '2.1.2' ] ]
+27 silly lockFile 7b651964-less-0-0-1 less@^0.0.1
+28 silly lockFile 7b651964-less-0-0-1 less@^0.0.1
+29 error notarget No compatible version found: less@'=0.0.1'
+29 error notarget Valid install targets:
+29 error notarget ["1.0.10","1.0.11","1.0.14","1.0.18","1.0.19","1.0.21","1.0.32","1.0.36","1.0.5","1.0.40","1.0.41","1.0.44","1.1.0","1.1.1","1.1.2","1.1.4","1.1.5","1.1.6","1.2.0","1.2.1","1.2.2","1.3.0","1.3.1","1.3.2","1.3.3","1.4.0-b1","1.4.0-b2","1.4.0-b3","1.4.0-b4","1.4.0","1.4.1","1.4.2","1.5.0-b1","1.5.0-b2","1.5.0-b3","1.5.0-b4","1.5.0","1.5.1","1.6.0","1.6.1","1.6.2","1.6.3","1.7.0","1.7.1","1.7.3","1.7.4","1.7.5","2.0.0-b1","2.0.0-b2","2.0.0-b3","2.0.0","2.1.0","2.1.1","2.1.2"]
+29 error notarget
+29 error notarget This is most likely not a problem with npm itself.
+29 error notarget In most cases you or one of your dependencies are requesting
+29 error notarget a package version that doesn't exist.
+30 error System Windows_NT 6.2.9200
+31 error command "C:\\Program Files\\nodejs\\\\node.exe" "C:\\Program Files\\nodejs\\node_modules\\npm\\bin\\npm-cli.js" "install"
+32 error cwd C:\Users\fblos_000\Projekty\UJ\Interfejsy\angular
+33 error node -v v0.10.33
+34 error npm -v 1.4.28
+35 error code ETARGET
+36 verbose exit [ 1, true ]
