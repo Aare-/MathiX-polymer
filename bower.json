@@ -18,6 +18,11 @@
     "tests"
   ],
   "dependencies": {
-    "angular-material": "~0.6.1"
+    "angular-material": "~0.6.1",
+    "webcomponentsjs": "~0.5.2",
+    "polymer": "Polymer/polymer#~0.5.2",
+    "core-elements": "Polymer/core-elements#~0.5.2",
+    "paper-elements": "Polymer/paper-elements#~0.5.2",
+    "app-router": "~2.3.2"
   }
 }

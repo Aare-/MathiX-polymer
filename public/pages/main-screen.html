@@ -1,0 +1,119 @@
+<polymer-element name="main-screen" attributes="menuTitle">
+  <template>  
+    <core-scaffold >
+      <core-header-panel navigation flex name="scaffold">  
+        <core-toolbar id="navheader">
+          <span>MathiX</span>
+        </core-toolbar>    
+
+        <core-menu selected="{{selected_menu}}">    
+          <paper-item noink>
+            <core-icon icon="dashboard"></core-icon>
+            <p>Dashboard</p>
+          </paper-item>
+          <paper-item noink>
+            <core-icon icon="account-circle"></core-icon>
+            <p>Moje konto</p>
+          </paper-item>                  
+        </core-menu>
+      </core-header-panel>    
+          
+      <template id="toolbarTitle" is="auto-binding" bind="{{menuTitle}}">
+        <core-toolbar tool>{{menuTitle.value}}</core-toolbar>    
+      </template>
+
+      <core-animated-pages id="menu" selected="{{selected_menu}}" on-core-select="{{mainMenuSelectAction}}">    
+        <div class="content">
+          <paper-tabs selected="{{selected_tab}}" class="bottom fit" on-core-select="{{menuSelectAction}}">          
+            <template id="dashboardTabs" repeat="{{tab in dashboardTabs}}">
+              <paper-tab>{{tab.title}}</paper-tab>
+            </template>
+          </paper-tabs>  
+
+          <core-animated-pages id="pages" selected="{{selected_tab}}" transitions="slide-from-right">      
+            <div>      
+              
+            </div>      
+
+            <div>                 
+              <paper-fab icon="add" title="create" on-click="{{goToAddStudent}}"></paper-fab>    
+            </div>          
+
+            <div>                                 
+              <paper-fab icon="create" title="create" on-click="{{goToNewExcercise}}"></paper-fab>                  
+            </div>                  
+
+            <div>
+              NOWY STUDENT
+            </div>
+
+            <div>
+              NOWE ZADANIE
+            </div>
+          </core-animated-pages>        
+        </div>      
+        <div class="content">
+          Moje konto
+        </div>  
+      </core-animated-pages>
+
+    </core-scaffold>  
+  </template>
+
+  <script type="text/javascript">
+    var pages = null;
+    var menu = null;
+    var toolbarTitle = null;
+    var dashboardTabs = [
+      {title : "wydarzenia"},
+      {title : "studenci"},
+      {title : "zadania"}
+    ];
+    var dashboardPages = [
+      {id: 0,
+       title: "dashboard"},
+      {id: 1,
+       title: "dashboard"},
+      {id: 2,
+       title: "dashboard"},
+      {id: 3,
+       title: "nowy student"},
+      {id: 4,
+       title: "nowe zadanie"}
+    ];
+    var menuTitles = [
+      {getTitle : function() {return dashboardPages[pages.selected].title;}},
+      {getTitle : function() {return "moje konto";}},
+    ];
+
+    function switchScreen(screenId) {
+      pages.selected = screenId;
+      toolbarTitle.menuTitle 
+          = {value: dashboardPages[pages.selected].title};        
+    }
+
+    Polymer("main-screen", {
+      ready: function() {      
+        this.dashboardTabs = dashboardTabs;
+
+        toolbarTitle = this.$.toolbarTitle;        
+        pages = this.$.pages;       
+        menu = this.$.menu;   
+      },
+      menuSelectAction: function() {        
+        switchScreen(pages.selected);
+      },
+      mainMenuSelectAction: function() {
+        toolbarTitle.menuTitle 
+          = {value: menuTitles[menu.selected].getTitle()};
+      },
+      goToAddStudent: function() {        
+        switchScreen(3);
+      },
+      goToNewExcercise: function () {
+        switchScreen(4);
+      }
+    });
+      
+  </script>
+</polymer-element>
