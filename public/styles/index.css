@@ -39,3 +39,9 @@ paper-fab {
     position: relative;
     left: -20px;
   }
+
+  * /deep/ paper-fab.bottom_right {
+      position: absolute;
+      right: 60px;
+      bottom: 60px;
+    }      

@@ -1,26 +1,23 @@
 <polymer-element name="events-tab" >
 <template>
 	<style>
-		paper-fab {
-      position: absolute;
-      right: 60px;
-      bottom: -650px;
-    }      
+		
 	</style>
 
   <events-card-excercise-ready-to-validate 
-    ctitle="siema" 
-    content="lol"></events-card-excercise-ready-to-validate>
+    ctitle="Zadanie 1" 
+    content="Tyrion Lanisster przesyła rozwiązanie zadania"></events-card-excercise-ready-to-validate>
   <events-card-excercise-ready-to-validate 
-    ctitle="siema 2" 
-    content="lol asdasd">
+    ctitle="Zadanie 1" 
+    content="Joffrey Barethon przesyła rozwiązanie zadania">
   </events-card-excercise-ready-to-validate>
   <events-card-excercise-assigned-stats
-    ctitle="Studenci 1" 
-    content="leniuszki">
+    ctitle="Testowa Grupa - Zadanie 1" 
+    content="Wykonało zadanie:">
   </events-card-excercise-assigned-stats>    
   
-  <paper-fab icon="account-circle"              
+  <paper-fab class="bottom_right"
+              icon="account-circle"              
              on-click="{{showToast}}"></paper-fab>      
   
 </template>

@@ -4,13 +4,7 @@
 		paper-button.colored {
       background: #4285f4;
       color: #fff;
-    }
-
-    paper-fab {
-      position: absolute;
-      right: 60px;
-      bottom: -650px;
-    }      
+    }    
 
     .contentbox {
       min-height: 30px;      
@@ -64,7 +58,8 @@
     </div>
   </div>    
 
-  <paper-fab icon="done"              
+  <paper-fab class="bottom_right"
+             icon="done"              
              on-click="{{validateAndSubmit}}"></paper-fab>      
 
 </template>

@@ -1,10 +1,12 @@
 <polymer-element name="main-screen">
   <template>  
-    <style>      
-      
+    <style>
+      .capitalize{
+        text-transform: uppercase;          
+      }
     </style>
 
-    <core-scaffold >
+    <core-scaffold>
       <core-header-panel navigation flex name="scaffold">  
         <core-toolbar id="navheader">
           <span>MathiX</span>
@@ -23,43 +25,43 @@
       </core-header-panel>    
           
       <template id="toolbarTitle" is="auto-binding" bind="{{menuTitle}}">
-        <core-toolbar tool>{{menuTitle.value}}</core-toolbar>    
+        <core-toolbar tool class="capitalize">{{menuTitle.value}}</core-toolbar>    
       </template>
 
       <core-animated-pages id="menu" selected="{{selected_menu}}" on-core-select="{{mainMenuSelectAction}}">    
         <div class="content">
           <paper-tabs selected="{{selected_tab}}" class="bottom fit" on-core-select="{{menuSelectAction}}">     
             <template id="dashboardTabs" repeat="{{tab in dashboardTabs}}">
-              <paper-tab>{{tab.title}}</paper-tab>
+              <paper-tab class="capitalize">{{tab.title}}</paper-tab>
             </template>
           </paper-tabs>  
 
-          <core-animated-pages id="pages" selected="{{selected_tab}}" transitions="slide-from-right">      
-            <div>
-              <events-tab myId="0"></events-tab>
+          <core-animated-pages id="pages" selected="{{selected_tab}}" transitions="slide-from-right" >      
+            <div class="fullHeight">
+              <events-tab myId="0" ></events-tab>
             </div>      
 
-            <div>
+            <div class="fullHeight">
               <groups-list-tab goToAddGroup="{{goToAddGroup}}" myId="1"></groups-list-tab>              
             </div>          
 
-            <div>                                 
+            <div class="fullHeight">                                 
               <excercises-tab goToNewExcercise="{{goToNewExcercise}}" myId="2"></excercises-tab>              
             </div>                  
 
-            <div>
+            <div class="fullHeight">
               <new-group-form myId="3"></new-group-form>
             </div>
 
-            <div>
+            <div class="fullHeight">
               <new-excercise-form myId="4"></new-excercise-form>
             </div>
 
-            <div>
+            <div class="fullHeight">
               <groups-details-page myId="5"></groups-details-page>
             </div>
 
-            <div>
+            <div class="fullHeight">
               <excercise-details-page myId="6"></excercise-details-page>
             </div>
           </core-animated-pages>        
@@ -116,10 +118,15 @@
     }());
 
     var Navigator = (function() {
-      var onSwitchCallbacks = [];
+      var onSwitchCallbacks = [];      
+      var singleTransition = "slide-from-right";
 
       return {
-        switchScreen : function(screenId) {
+        switchScreen : function(screenId, transition) {
+          if(typeof transition == 'undefined')
+            transition = "slide-from-right";                      
+
+          singleTransition = transition;          
           pages.selected = screenId;                    
         },
 
@@ -127,7 +134,9 @@
           toolbarTitle.menuTitle = {value: _dashboardPages[pages.selected].title};        
           onSwitchCallbacks.forEach(function(val) {
             val(pages.selected);
-          });
+          });          
+          pages.transitions = singleTransition;
+          singleTransition = "slide-from-right";          
         },
 
         registerCallback : function(call) {
@@ -136,6 +145,8 @@
       };
     }());    
 
+    var fH;
+
     Polymer("main-screen", {
       ready: function() {      
         this.dashboardTabs = dashboardTabs;
@@ -143,8 +154,11 @@
         toolbarTitle = this.$.toolbarTitle;        
         pages = this.$.pages;       
         menu = this.$.menu;   
+        fH = this.shadowRoot.querySelectorAll('.fullHeight');                
         _context = this;        
         _globalToast = this.$.globalToast;
+
+        resolveHeightIssues();
       },
       menuSelectAction: function() {        
         Navigator.updateScreen();
@@ -154,12 +168,22 @@
           = {value: _menuTitles[menu.selected].getTitle()};
       },
       goToAddGroup: function() {        
-        Navigator.switchScreen(3);
+        Navigator.switchScreen(3, "cross-fade-all");
       },
       goToNewExcercise: function () {
-        Navigator.switchScreen(4);
+        Navigator.switchScreen(4, "cross-fade-all");
       }
     });
       
+
+    function resolveHeightIssues(){
+      for(var i = 0; i<fH.length; i++) {
+        fH[i].style.height = ($(window).height() - 112)+"px";
+      }  
+    }
+
+    $( window ).resize(function() {           
+      resolveHeightIssues();      
+    });    
   </script>
 </polymer-element>

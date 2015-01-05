@@ -1,1 +1,0 @@
-sass --watch sass\index.scss:sass_out\index.css

@@ -1,11 +1,6 @@
 <polymer-element name="groups-list-tab" attributes="goToAddGroup myId">
 <template>
-	<style>
-		paper-fab {
-    	position: absolute;
-    	right: 60px;
-    	bottom: -650px;
-  	}      
+	<style>		
 
     core-list {
       width: 100%;
@@ -22,7 +17,7 @@
     </template>
   </core-list>    
 
-	<paper-fab icon="add" title="create" on-click="{{goToAddGroup}}"></paper-fab>    
+	<paper-fab class="bottom_right" icon="add" title="create" on-click="{{goToAddGroup}}"></paper-fab>    
 </template>
 <script type="text/javascript">  
 	Polymer("groups-list-tab", {

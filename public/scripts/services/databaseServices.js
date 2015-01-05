@@ -230,6 +230,11 @@ return {
 		});
 	},
 
+	getStudentsFromGroup : function(group) {
+		//TODO: implement
+		return students;
+	},
+
 	getExcercises : function() {
 		var mentor = _getLoggedUsers();
 		return excercises.filter(function(val, id, ar) {

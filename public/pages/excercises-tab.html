@@ -1,11 +1,6 @@
 <polymer-element name="excercises-tab" attributes="goToNewExcercise myId">
 <template>
-	<style>		
-    paper-fab {
-      position: absolute;
-      right: 60px;
-      bottom: -650px;
-    }      
+	<style>		    
 
     core-list {
       width: 100%;
@@ -24,7 +19,7 @@
     </template>
   </core-list>    
 
-	<paper-fab icon="create" title="create" on-click="{{goToNewExcercise}}"></paper-fab>    
+	<paper-fab class="bottom_right" icon="create" title="create" on-click="{{goToNewExcercise}}"></paper-fab>    
 
   <core-overlay id="dialog" class="white" layered backdrop>
     <div>

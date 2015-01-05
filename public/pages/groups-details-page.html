@@ -7,15 +7,16 @@
     	top: 115px;
   	}      
 
-    core-list {
+    core-list {      
       width: 100%;
-      height: 300px;      
+      height: 300px;
+      margin: 30px 30px;    
     }
 
     #header{
       width: 100%;
-      height: 130px;
-      background: pink;
+      height: 130px;    
+      background: pink;  
       position: relative;
     }
 
@@ -38,12 +39,10 @@
         <paper-button on-click="{{editGroup}}"><core-icon icon="create"></core-icon></paper-button>
       </div>
   </div>
-  <core-list data="{{groups}}">
+  <core-list data="{{students}}">
     <template>
       <div class="row" layout horizontal>
-        <p flex>{{model.name}}</p>
-        <paper-button icon="create"></paper-button>
-        <paper-button icon="bin"></paper-button> 
+        <p>{{model.name}} {{model.surname}}</p>        
       </div>
     </template>
   </core-list>    
@@ -53,6 +52,8 @@
 <script type="text/javascript">
 	Polymer("groups-details-page", {
       	ready: function() {
+          this.students = Database.getStudentsFromGroup(null);
+
           Navigator.registerCallback(function(page){
             
 

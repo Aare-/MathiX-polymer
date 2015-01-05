@@ -1,12 +1,6 @@
 <polymer-element name="new-group-form" attributes="myId">
 <template>
-	<style>
-	  	paper-fab {
-	      position: absolute;
-	      right: 60px;
-	      bottom: -650px;
-	    }      
-
+	<style>	  	
 	    core-list {	    	
 	    	width: 100%;
 	    	height: 300px;
@@ -32,8 +26,9 @@
   		</template>
   	</core-list>  	
 
-	<paper-fab icon="done"              
-             on-click="{{validateAndSubmit}}"></paper-fab>      
+	<paper-fab class="bottom_right"
+			   icon="done"              
+               on-click="{{validateAndSubmit}}"></paper-fab>      
 
     
 </template>
@@ -58,7 +53,7 @@
 
       		Database.addGroup({name : newGroupName});
       		Utils.showToast("Grupa '"+newGroupName+"' utworzona");
-      		Navigator.switchScreen(1);
+      		Navigator.switchScreen(1, "cross-fade-all");
       	}      
     });
 </script>
