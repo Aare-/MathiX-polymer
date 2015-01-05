@@ -1,0 +1,38 @@
+MathiX
+
+*****INSTALACJA*****
+1. Pobierz i zainstaluj node.js
+2. sklonuj to repo lokalnie u siebie
+3. otworz linie komend w glownym folderze (tam gdzie jest plik package.json)
+W linii komend:
+4. npm install
+5. npm update
+6. npm install bower
+7. bower install
+8. bower update
+9. node server.js - tego nie zamyac
+
+Z boza pomoca po wejsciu na http://localhost:8080/ powinna wyskoczyc strona
+
+*****TUTKi*****
+Polymer, z czym to sie je, wszystkie kontrolki i dema: 
+https://www.polymer-project.org/docs/polymer/polymer.html
+Single Page App w angularze (jako referencja jak zrobic restfull api):
+https://github.com/ccoenraets/angular-directory
+
+*****CO CZA ZROBIC*****
+(ogolnie)
+1. podpiac baze danych
+2. doimplementowac faktyczne dzialanie czesci funkcji
+3. logowanie
+4. zrobic aplikacje dla studenta
+5. doszlifowac animacje
+6. doszlifowac design
+
+
+*****AUTORZY*****
+Bogdan Chwaliński
+Filip Loster
+Dariusz Furman
+Przemek Olszański
+Szymon Kułach-Maślany
