@@ -9,7 +9,8 @@
   "author": "Filip Loster",
   "license": "ISC",
   "dependencies": {
-    "angular": "^1.3.8",    
+    "angular": "^1.3.8",
+    "express": "^4.10.6",
     "passport": "^0.2.1"
   }
 }
