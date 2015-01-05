@@ -1,0 +1,87 @@
+<polymer-element name="new-excercise-form" >
+<template>
+	<style>
+		paper-button.colored {
+      background: #4285f4;
+      color: #fff;
+    }
+
+    paper-fab {
+      position: absolute;
+      right: 60px;
+      bottom: -650px;
+    }      
+
+    .contentbox {
+      min-height: 30px;      
+      padding: 15px 15px;
+      margin: 15px 10px;
+      width: 100%;
+    }
+	</style>
+	
+  <div layout horizontal center>
+    <paper-input-decorator  label="Tytuł Zadania" floatingLabel error="wymagane">
+      <input is="core-input" required>
+    </paper-input-decorator>
+
+    <div center horizontal layout>
+      <paper-dropdown-menu label="Typ zadania">
+        <paper-dropdown class="dropdown">
+          <core-menu class="menu">
+            <template repeat="{{excercise_types}}">
+              <paper-item>{{}}</paper-item>
+            </template>
+          </core-menu>
+        </paper-dropdown>
+      </paper-dropdown-menu>    
+    </div>  
+  </div>  
+
+  <div layout vertical center>     
+    <paper-shadow z="1"  class="contentbox">
+      <div class="contentbox">        
+      </div>
+    </paper-shadow>
+
+    <paper-button class="colored">Dodaj Treść</paper-button>
+  </div>
+
+  <div layout vertical center> 
+    <paper-shadow class="contentbox" z="1" >
+      <div class="contentbox">        
+      </div>
+    </paper-shadow>    
+
+    <paper-button class="colored">Dodaj Rozwiązanie</paper-button>
+
+    <div layout horizontal center bottom>
+      <div>Jedno rozwiązanie</div>
+      <paper-toggle-button class="blue"></paper-toggle-button>
+      <paper-input-decorator flex label="Rozwiązanie" floatingLabel error="wymagane">
+        <input is="core-input" required>
+      </paper-input-decorator>
+    </div>
+  </div>    
+
+  <paper-fab icon="done"              
+             on-click="{{validateAndSubmit}}"></paper-fab>      
+
+</template>
+<script type="text/javascript">
+	Polymer("new-excercise-form", {
+      	ready: function() {      
+        	this.excercise_types = [
+             "Matematyka",
+             "Język Polski",
+             "Chemia",
+             "Biologia",
+             "Inne"
+          ];
+      	},
+        validateAndSubmit: function() {
+
+        }
+    });
+</script>
+</polymer-element>

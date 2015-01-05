@@ -1,0 +1,46 @@
+<polymer-element name="excercises-tab" attributes="goToNewExcercise myId">
+<template>
+	<style>		
+    paper-fab {
+      position: absolute;
+      right: 60px;
+      bottom: -650px;
+    }      
+
+    core-list {
+      width: 100%;
+      height: 300px;      
+    }
+	</style>
+
+  <core-list data="{{excercises}}">
+    <template>
+      <div class="row" layout horizontal>
+        <p flex>{{model.title}}</p>
+        <paper-button on-click="{{assignExcercise}}"><core-icon icon="file-upload"></core-icon></paper-button>
+        <paper-button on-click="{{goToExcerciseDetails}}"><core-icon icon="arrow-forward"></core-icon></paper-button>        
+      </div>
+    </template>
+  </core-list>    
+
+	<paper-fab icon="create" title="create" on-click="{{goToNewExcercise}}"></paper-fab>    
+</template>
+<script type="text/javascript">  
+	Polymer("excercises-tab", {
+      	ready: function() {              
+          var context = this;          
+
+          Navigator.registerCallback(function(page){
+            if(page == context.myId)
+              context.excercises = Database.getExcercises();            
+          });        	
+      	},
+        assignExcercise : function() {
+
+        },
+        goToExcerciseDetails : function() {
+
+        }      
+    });
+</script>
+</polymer-element>

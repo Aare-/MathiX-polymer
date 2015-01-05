@@ -1,0 +1,24 @@
+<polymer-element name="account-details">
+<template>
+	<style>
+		.card {
+  		  margin: 20px 30px;
+  		  padding: 10px 15px;		  
+		}
+
+		.card p {
+			font-size: 20px;
+		}
+	</style>
+	{{name}} {{surname}}<br>
+	<paper-button>Wyloguj się.</paper-button>
+</template>
+<script type="text/javascript">
+	Polymer("account-details", {
+      	ready: function() {      
+        	this.name = Database.getLoggedUser().name;
+        	this.surname = Database.getLoggedUser().surname;
+      	}      
+    });
+</script>
+</polymer-element>

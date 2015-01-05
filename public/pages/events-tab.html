@@ -1,0 +1,36 @@
+<polymer-element name="events-tab" >
+<template>
+	<style>
+		paper-fab {
+      position: absolute;
+      right: 60px;
+      bottom: -650px;
+    }      
+	</style>
+
+  <events-card-excercise-ready-to-validate 
+    ctitle="siema" 
+    content="lol"></events-card-excercise-ready-to-validate>
+  <events-card-excercise-ready-to-validate 
+    ctitle="siema 2" 
+    content="lol asdasd">
+  </events-card-excercise-ready-to-validate>
+  <events-card-excercise-assigned-stats
+    ctitle="Studenci 1" 
+    content="leniuszki">
+  </events-card-excercise-assigned-stats>    
+  
+  <paper-fab icon="account-circle"              
+             on-click="{{showToast}}"></paper-fab>      
+  
+</template>
+<script type="text/javascript">
+	Polymer("events-tab", {
+      	ready: function() {         	 
+      	},
+        showToast: function() {
+          Utils.showToast("Twoje ID: "+Database.getLoggedUser().hashval);          
+        }
+    });
+</script>
+</polymer-element>

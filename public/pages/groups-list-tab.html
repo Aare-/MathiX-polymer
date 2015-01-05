@@ -1,0 +1,44 @@
+<polymer-element name="groups-list-tab" attributes="goToAddGroup myId">
+<template>
+	<style>
+		paper-fab {
+    	position: absolute;
+    	right: 60px;
+    	bottom: -650px;
+  	}      
+
+    core-list {
+      width: 100%;
+      height: 300px;      
+    }
+	</style>
+
+  <core-list data="{{groups}}">
+    <template>
+      <div class="row" layout horizontal>
+        <p flex>{{model.name}}</p>
+        <paper-button on-click="{{goToGroupDetails}}"><core-icon icon="arrow-forward"></core-icon></paper-button>        
+      </div>
+    </template>
+  </core-list>    
+
+	<paper-fab icon="add" title="create" on-click="{{goToAddGroup}}"></paper-fab>    
+</template>
+<script type="text/javascript">  
+	Polymer("groups-list-tab", {
+      	ready: function() {              	                              
+          var context = this;          
+
+          Navigator.registerCallback(function(page){
+            if(page == context.myId)
+              context.groups = Database.getGroups();            
+          });
+          
+      	},        
+        goToGroupDetails: function() {
+          Navigator.switchScreen(5);
+        }      
+    });
+</script>
+</polymer-element>
+

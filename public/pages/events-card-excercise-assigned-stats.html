@@ -1,0 +1,28 @@
+<polymer-element name="events-card-excercise-assigned-stats" attributes="ctitle content">
+<template>
+	<style>
+		.card {
+  		  margin: 20px 30px;
+  		  padding: 10px 15px;		  
+		}
+
+		.card p {
+			font-size: 20px;
+		}
+	</style>
+	<paper-shadow class="card" z="1" >
+		<p>{{ctitle}}</p>
+  		<section>{{content}}</section>
+  		20 / 30
+  		<paper-progress value="20" max="30"></paper-progress><br>
+  		<paper-button>Ukryj</paper-button>  		
+ 	</paper-shadow>
+</template>
+<script type="text/javascript">
+	Polymer("events-card-excercise-assigned-stats", {
+      	ready: function() {      
+        	
+      	}      
+    });
+</script>
+</polymer-element>

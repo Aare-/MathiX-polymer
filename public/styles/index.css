@@ -13,3 +13,9 @@ main-screen::shadow paper-tabs::shadow #selectionBar {
 main-screen::shadow paper-tabs paper-tab::shadow #ink {
   color: #ff4081;
 }
+
+paper-fab {
+  position: absolute;
+  right: 60px;
+  bottom: -400px;
+}

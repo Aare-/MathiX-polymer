@@ -1,5 +1,9 @@
-<polymer-element name="main-screen" attributes="menuTitle">
+<polymer-element name="main-screen">
   <template>  
+    <style>      
+      
+    </style>
+
     <core-scaffold >
       <core-header-panel navigation flex name="scaffold">  
         <core-toolbar id="navheader">
@@ -24,40 +28,46 @@
 
       <core-animated-pages id="menu" selected="{{selected_menu}}" on-core-select="{{mainMenuSelectAction}}">    
         <div class="content">
-          <paper-tabs selected="{{selected_tab}}" class="bottom fit" on-core-select="{{menuSelectAction}}">          
+          <paper-tabs selected="{{selected_tab}}" class="bottom fit" on-core-select="{{menuSelectAction}}">     
             <template id="dashboardTabs" repeat="{{tab in dashboardTabs}}">
               <paper-tab>{{tab.title}}</paper-tab>
             </template>
           </paper-tabs>  
 
           <core-animated-pages id="pages" selected="{{selected_tab}}" transitions="slide-from-right">      
-            <div>      
-              
+            <div>
+              <events-tab myId="0"></events-tab>
             </div>      
 
-            <div>                 
-              <paper-fab icon="add" title="create" on-click="{{goToAddStudent}}"></paper-fab>    
+            <div>
+              <groups-list-tab goToAddGroup="{{goToAddGroup}}" myId="1"></groups-list-tab>              
             </div>          
 
             <div>                                 
-              <paper-fab icon="create" title="create" on-click="{{goToNewExcercise}}"></paper-fab>                  
+              <excercises-tab goToNewExcercise="{{goToNewExcercise}}" myId="2"></excercises-tab>              
             </div>                  
 
             <div>
-              NOWY STUDENT
+              <new-group-form myId="3"></new-group-form>
             </div>
 
             <div>
-              NOWE ZADANIE
+              <new-excercise-form></new-excercise-form>
+            </div>
+
+            <div>
+              <groups-details-page></groups-details-page>
             </div>
           </core-animated-pages>        
-        </div>      
+        </div> 
+
         <div class="content">
-          Moje konto
+          <account-details></account-details>
         </div>  
       </core-animated-pages>
 
     </core-scaffold>  
+    <paper-toast id="globalToast" text="{{global_toast_msg}}"></paper-toast>  
   </template>
 
   <script type="text/javascript">
@@ -69,7 +79,7 @@
       {title : "studenci"},
       {title : "zadania"}
     ];
-    var dashboardPages = [
+    var _dashboardPages = [
       {id: 0,
        title: "dashboard"},
       {id: 1,
@@ -77,20 +87,48 @@
       {id: 2,
        title: "dashboard"},
       {id: 3,
-       title: "nowy student"},
+       title: "nowa grupa"},
       {id: 4,
-       title: "nowe zadanie"}
+       title: "nowe zadanie"},
+      {id: 5,
+       title: "grupa, detale"}
     ];
-    var menuTitles = [
-      {getTitle : function() {return dashboardPages[pages.selected].title;}},
+    var _menuTitles = [
+      {getTitle : function() {return _dashboardPages[pages.selected].title;}},
       {getTitle : function() {return "moje konto";}},
-    ];
+    ];    
+    var _context;
+    var _globalToast;    
 
-    function switchScreen(screenId) {
-      pages.selected = screenId;
-      toolbarTitle.menuTitle 
-          = {value: dashboardPages[pages.selected].title};        
-    }
+    var Utils = (function() {
+        return {          
+          showToast : function(message) {
+            _context.global_toast_msg = message;            
+            _globalToast.show();
+          }
+        };
+    }());
+
+    var Navigator = (function() {
+      var onSwitchCallbacks = [];
+
+      return {
+        switchScreen : function(screenId) {
+          pages.selected = screenId;                    
+        },
+
+        updateScreen : function() {
+          toolbarTitle.menuTitle = {value: _dashboardPages[pages.selected].title};        
+          onSwitchCallbacks.forEach(function(val) {
+            val(pages.selected);
+          });
+        },
+
+        registerCallback : function(call) {
+          onSwitchCallbacks.push(call);
+        }
+      };
+    }());    
 
     Polymer("main-screen", {
       ready: function() {      
@@ -99,19 +137,21 @@
         toolbarTitle = this.$.toolbarTitle;        
         pages = this.$.pages;       
         menu = this.$.menu;   
+        _context = this;        
+        _globalToast = this.$.globalToast;
       },
       menuSelectAction: function() {        
-        switchScreen(pages.selected);
+        Navigator.updateScreen();
       },
       mainMenuSelectAction: function() {
         toolbarTitle.menuTitle 
-          = {value: menuTitles[menu.selected].getTitle()};
+          = {value: _menuTitles[menu.selected].getTitle()};
       },
-      goToAddStudent: function() {        
-        switchScreen(3);
+      goToAddGroup: function() {        
+        Navigator.switchScreen(3);
       },
       goToNewExcercise: function () {
-        switchScreen(4);
+        Navigator.switchScreen(4);
       }
     });
       

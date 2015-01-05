@@ -1,0 +1,27 @@
+<polymer-element name="events-card-excercise-ready-to-validate" attributes="ctitle content">
+<template>
+	<style>
+		.card {
+  		  margin: 20px 30px;
+  		  padding: 10px 15px;		  
+		}
+
+		.card p {
+			font-size: 20px;
+		}
+	</style>
+	<paper-shadow class="card" z="1" >
+		<p>{{ctitle}}</p>
+  		<section>{{content}}</section>
+  		<paper-button raised>Oceń</paper-button>
+  		<paper-button>Przypomnij później</paper-button>  		
+ 	</paper-shadow>
+</template>
+<script type="text/javascript">
+	Polymer("events-card-excercise-ready-to-validate", {
+      	ready: function() {      
+        	
+      	}      
+    });
+</script>
+</polymer-element>
