@@ -9,38 +9,70 @@
 
     core-list {
       width: 100%;
-      height: 300px;      
-    }
+      height: 300px;            
+    }    
+    
 	</style>
 
   <core-list data="{{excercises}}">
     <template>
-      <div class="row" layout horizontal>
+      <div class="row" layout horizontal excerciseId="{{model.id}}">
         <p flex>{{model.title}}</p>
-        <paper-button on-click="{{assignExcercise}}"><core-icon icon="file-upload"></core-icon></paper-button>
+        <paper-button on-click="{{assignExcerciseChooseGroups}}"><core-icon icon="file-upload"></core-icon></paper-button>
         <paper-button on-click="{{goToExcerciseDetails}}"><core-icon icon="arrow-forward"></core-icon></paper-button>        
       </div>
     </template>
   </core-list>    
 
 	<paper-fab icon="create" title="create" on-click="{{goToNewExcercise}}"></paper-fab>    
+
+  <core-overlay id="dialog" class="white" layered backdrop>
+    <div>
+      <h2>Zadaj zadanie:</h2>
+      
+      <core-list data="{{groups}}">
+        <template>
+          <core-label class="row {{ {selected: selected} | tokenList }}" layout horizontal center>
+            <p flex>{{model.name}}</p>
+            <paper-checkbox checked="{{model.checked}}" for></paper-checkbox>         
+          </core-label>
+        </template>
+      </core-list>
+
+      <paper-button on-click="{{cancelAssigment}}"><core-icon icon="close"></core-icon></paper-button>
+      <paper-button on-click="{{performAssigment}}"><core-icon icon="done"></core-icon></paper-button>
+    </div>
+  </core-overlay>
 </template>
 <script type="text/javascript">  
 	Polymer("excercises-tab", {
       	ready: function() {              
-          var context = this;          
+          var context = this;                    
 
           Navigator.registerCallback(function(page){
-            if(page == context.myId)
+            if(page == context.myId) {
               context.excercises = Database.getExcercises();            
+              
+            }
           });        	
       	},
-        assignExcercise : function() {
-
+        assignExcerciseChooseGroups : function(event, position, button) {
+          var excerciseId = button.parentNode.getAttribute("excerciseId");          
+          this.groups = Database.getGroups();
+          this.$.dialog.toggle();          
         },
-        goToExcerciseDetails : function() {
-
-        }      
+        goToExcerciseDetails : function(event, position, button) {
+          var excerciseId = button.parentNode.getAttribute("excerciseId");
+          Navigator.switchScreen(6);
+        },
+        cancelAssigment : function() {
+          this.$.dialog.close();
+        },
+        performAssigment : function(event, position, button) {
+          var excerciseId = button.parentNode.getAttribute("excerciseId");                    
+          this.$.dialog.close();
+          Utils.showToast("Zadanie zadane.");
+        }
     });
 </script>
 </polymer-element>

@@ -52,11 +52,15 @@
             </div>
 
             <div>
-              <new-excercise-form></new-excercise-form>
+              <new-excercise-form myId="4"></new-excercise-form>
             </div>
 
             <div>
-              <groups-details-page></groups-details-page>
+              <groups-details-page myId="5"></groups-details-page>
+            </div>
+
+            <div>
+              <excercise-details-page myId="6"></excercise-details-page>
             </div>
           </core-animated-pages>        
         </div> 
@@ -91,7 +95,9 @@
       {id: 4,
        title: "nowe zadanie"},
       {id: 5,
-       title: "grupa, detale"}
+       title: "grupa, detale"},
+      {id: 6,
+       title: "zadanie, detale"},
     ];
     var _menuTitles = [
       {getTitle : function() {return _dashboardPages[pages.selected].title;}},

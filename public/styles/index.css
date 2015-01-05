@@ -19,3 +19,23 @@ paper-fab {
   right: 60px;
   bottom: -400px;
 }
+
+ * /deep/ core-overlay.white {
+   box-sizing: border-box;
+   -moz-box-sizing: border-box;               
+   background: white;
+   padding:30px 42px;     
+   box-shadow: 0 4px 16px rgba(0,0,0,0.2);
+ }
+
+ * /deep/ core-overlay core-list {
+    min-width: 300px;
+    max-width: 600px;
+    min-height: 100px;
+    max-height: 500px;              
+  }
+
+  * /deep/ core-overlay core-list core-label paper-checkbox {
+    position: relative;
+    left: -20px;
+  }

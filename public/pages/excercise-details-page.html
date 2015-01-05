@@ -1,0 +1,73 @@
+<polymer-element name="excercise-details-page">
+<template>
+	<style>
+		paper-fab {
+    	position: absolute;
+    	left: 30px;
+    	top: 115px;
+  	}      
+
+    core-list {
+      width: 100%;
+      height: 300px;      
+    }
+
+    #header{
+      width: 100%;
+      height: 130px;
+      background: lightgreen;
+      position: relative;
+    }
+
+    #header div.actions {
+      position: absolute;
+      bottom: 0px;            
+      width: 100%;
+    }
+
+    #header div.actions paper-button {
+      float: right;
+    }
+
+	</style>
+
+  <div id="header">
+      <p>{{excerciseTitle}}</p>
+      <div class="actions">
+        <paper-button on-click="{{deleteExcercise}}"><core-icon icon="delete"></core-icon></paper-button>
+        <paper-button on-click="{{editExcercise}}"><core-icon icon="create"></core-icon></paper-button>
+      </div>
+  </div>
+  <core-list data="{{groups}}">
+    <template>
+      <div class="row" layout horizontal>
+        <p flex>{{model.name}}</p>
+        <paper-button icon="create"></paper-button>
+        <paper-button icon="bin"></paper-button> 
+      </div>
+    </template>
+  </core-list>    
+
+	<paper-fab icon="arrow-back" title="create" on-click="{{goBack}}"></paper-fab>    
+</template>
+<script type="text/javascript">
+	Polymer("excercise-details-page", {
+      	ready: function() {
+          Navigator.registerCallback(function(page){
+            
+
+          });
+      	},
+        goBack: function() {
+          Navigator.switchScreen(2);
+        },
+        deleteExcercise: function() {
+
+        },
+        editExcercise: function() {
+          
+        }
+    });
+</script>
+</polymer-element>
+
