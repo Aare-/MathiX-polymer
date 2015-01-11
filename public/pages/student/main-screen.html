@@ -1,0 +1,152 @@
+<polymer-element name="main-screen">
+  <template>  
+    <style>
+      .capitalize{
+        text-transform: uppercase;          
+      }
+    </style>
+
+    <core-scaffold>
+      <core-header-panel navigation flex name="scaffold">  
+        <core-toolbar id="navheader">
+          <span>MathiX</span>
+        </core-toolbar>    
+
+        <core-menu selected="{{selected_menu}}">    
+          <paper-item noink>
+            <core-icon icon="dashboard"></core-icon>
+            <p>Dashboard</p>
+          </paper-item>
+          <paper-item noink>
+            <core-icon icon="account-circle"></core-icon>
+            <p>Moje konto</p>
+          </paper-item>                  
+        </core-menu>
+      </core-header-panel>    
+          
+      <template id="toolbarTitle" is="auto-binding" bind="{{menuTitle}}">
+        <core-toolbar tool class="capitalize">{{menuTitle.value}}</core-toolbar>    
+      </template>
+
+      <core-animated-pages id="menu" selected="{{selected_menu}}" on-core-select="{{mainMenuSelectAction}}">    
+        <div class="content">
+          <paper-tabs selected="{{selected_tab}}" class="bottom fit" on-core-select="{{menuSelectAction}}">     
+            <template id="dashboardTabs" repeat="{{tab in dashboardTabs}}">
+              <paper-tab class="capitalize">{{tab.title}}</paper-tab>
+            </template>
+          </paper-tabs>  
+
+          <core-animated-pages id="pages" selected="{{selected_tab}}" transitions="slide-from-right" >      
+            <div class="fullHeight">
+              <hub-tab myId="0" ></hub-tab>
+            </div>      
+
+            <div class="fullHeight">
+              <excercises-tab myId="1"></excercises-tab>              
+            </div>          
+
+            <div class="fullHeight">                                 
+              <scores-tab myId="2"></scores-tab>              
+            </div>                              
+          </core-animated-pages>        
+        </div> 
+
+        <div class="content">
+          Account details
+        </div>  
+      </core-animated-pages>
+
+    </core-scaffold>  
+    <paper-toast id="globalToast" text="{{global_toast_msg}}"></paper-toast>  
+  </template>
+
+  <script type="text/javascript">
+    var pages = null;
+    var menu = null;
+    var toolbarTitle = null;
+    var dashboardTabs = [
+      {title : "hub"},
+      {title : "zadania"},
+      {title : "oceny"}
+    ];
+    var _dashboardPages = [
+      {id: 0,
+       title: "dashboard"},
+      {id: 1,
+       title: "dashboard"},
+      {id: 2,
+       title: "dashboard"},      
+    ];
+    var _menuTitles = [
+      {getTitle : function() {return _dashboardPages[pages.selected].title;}},
+      {getTitle : function() {return "moje konto";}},
+    ];    
+    var _context;
+    var _globalToast;    
+
+    var Utils = (function() {
+        return {          
+          showToast : function(message) {
+            _context.global_toast_msg = message;            
+            _globalToast.show();
+          }
+        };
+    }());
+
+    var Navigator = (function() {
+      var onSwitchCallbacks = [];      
+      var singleTransition = "slide-from-right";
+
+      return {
+        switchScreen : function(screenId, transition) {
+          if(typeof transition == 'undefined')
+            transition = "slide-from-right";                      
+
+          singleTransition = transition;          
+          pages.selected = screenId;                    
+        },
+
+        updateScreen : function() {
+          toolbarTitle.menuTitle = {value: _dashboardPages[pages.selected].title};        
+          onSwitchCallbacks.forEach(function(val) {
+            val(pages.selected);
+          });          
+          pages.transitions = singleTransition;
+          singleTransition = "slide-from-right";          
+        },
+
+        registerCallback : function(call) {
+          onSwitchCallbacks.push(call);
+        }
+      };
+    }());    
+
+    var fH;
+
+    Polymer("main-screen", {
+      ready: function() {      
+        this.dashboardTabs = dashboardTabs;
+
+        toolbarTitle = this.$.toolbarTitle;        
+        pages = this.$.pages;       
+        menu = this.$.menu;   
+        fH = this.shadowRoot.querySelectorAll('.fullHeight');                
+        _context = this;        
+        _globalToast = this.$.globalToast;
+
+        resolveHeightIssues();
+      }
+    });
+      
+
+    function resolveHeightIssues(){
+      for(var i = 0; i<fH.length; i++) {
+        fH[i].style.height = ($(window).height() - 112)+"px";
+      }  
+    }
+
+    $( window ).resize(function() {           
+      resolveHeightIssues();      
+    });    
+  </script>
+</polymer-element>
