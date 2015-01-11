@@ -1,0 +1,48 @@
+<polymer-element name="rate-excercise" attributes="myId">
+<template>
+	<style>	  	
+	    
+	</style>  
+
+  <div class="tab_scrollable_content">    
+    <div>
+      <p>Zadanie: {{eventData.excercise.title}}</p>
+      <p>Autor: {{eventData.student.name}} {{eventData.student.surname}}</p>
+      <paper-button on-click="{{goToExcercise}}">Zobacz zadanie</paper-button>    
+      <br/>
+      Ocena:
+      <paper-slider value="1" max="6" editable></paper-slider>
+    </div>
+
+    <div>
+
+    </div>
+  </div>
+	
+	<paper-fab class="bottom_right"
+			   icon="done" 
+         on-click="{{rate_done}}" ></paper-fab>      
+    
+</template>
+<script type="text/javascript">	
+
+	Polymer("rate-excercise", {
+      	ready: function() {                
+          var context = this;
+
+          Navigator.registerCallback(function(screenId){
+            if(screenId == context.myId){
+              context.eventData = excerciseToRate;              
+            }
+          });
+      	},
+        rate_done : function() {
+          Navigator.switchScreen(0);
+          Utils.showToast("Zadanie ocenione");
+        },
+        goToExcercise : function() {
+          alert("TODO");
+        }
+    });
+</script>
+</polymer-element>

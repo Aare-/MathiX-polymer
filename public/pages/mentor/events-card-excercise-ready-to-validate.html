@@ -22,12 +22,15 @@
  	</paper-shadow>
 </template>
 <script type="text/javascript">
+	var excerciseToRate = null;
 	Polymer("events-card-excercise-ready-to-validate", {
       	ready: function() {      
       		//alert("rating event: "+this.eventData+" title: "+this.eventData.excercise.title);        	
       	},
       	rateSolution : function() {
-      		alert("rating solution id: "+this.eventData.solution.id);
+      		excerciseToRate = this.eventData;
+      		Navigator.switchScreen(7);
+      		//alert("rating solution id: "+this.eventData.solution.id);
       	}
     });
 </script>
