@@ -1,4 +1,4 @@
-<polymer-element name="events-card-excercise-ready-to-validate" attributes="ctitle content">
+<polymer-element name="events-card-excercise-ready-to-validate" attributes="eventData">
 <template>
 	<style>
 		.card {
@@ -11,17 +11,24 @@
 		}
 	</style>
 	<paper-shadow class="card" z="1" >
-		<p>{{ctitle}}</p>
-  		<section>{{content}}</section>
-  		<paper-button raised>Oceń</paper-button>
-  		<paper-button>Przypomnij później</paper-button>  		
+		
+		
+		<p>Nowe rozwiązanie do oceny.</p>		
+  		<section>"{{eventData.excercise.title}}" przez {{eventData.student.name}} {{eventData.student.surname}}</section>  		
+
+  		<br/>
+  		<paper-button raised on-click="{{rateSolution}}">Oceń</paper-button>
+  		<!-- <paper-button>Przypomnij później</paper-button> -->
  	</paper-shadow>
 </template>
 <script type="text/javascript">
 	Polymer("events-card-excercise-ready-to-validate", {
       	ready: function() {      
-        	
-      	}      
+      		//alert("rating event: "+this.eventData+" title: "+this.eventData.excercise.title);        	
+      	},
+      	rateSolution : function() {
+      		alert("rating solution id: "+this.eventData.solution.id);
+      	}
     });
 </script>
 </polymer-element>

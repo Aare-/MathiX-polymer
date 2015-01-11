@@ -4,17 +4,18 @@
 		
 	</style>
 
-  <events-card-excercise-ready-to-validate 
-    ctitle="Zadanie 1" 
-    content="Tyrion Lanisster przesyła rozwiązanie zadania"></events-card-excercise-ready-to-validate>
-  <events-card-excercise-ready-to-validate 
-    ctitle="Zadanie 1" 
-    content="Joffrey Barethon przesyła rozwiązanie zadania">
-  </events-card-excercise-ready-to-validate>
+  <div class="tab_scrollable_content">
+    <template repeat="{{e in events}}">
+      <events-card-excercise-ready-to-validate eventData="{{e}}"></events-card-excercise-ready-to-validate>  
+    </template>  
+  </div>
+
+  <!-- 
   <events-card-excercise-assigned-stats
     ctitle="Testowa Grupa - Zadanie 1" 
     content="Wykonało zadanie:">
   </events-card-excercise-assigned-stats>    
+  -->
   
   <paper-fab class="bottom_right"
               icon="account-circle"              
@@ -24,6 +25,7 @@
 <script type="text/javascript">
 	Polymer("events-tab", {
       	ready: function() {         	 
+          this.events = Database.getEvents();          
       	},
         showToast: function() {
           Utils.showToast("Twoje ID: "+Database.getLoggedUser().hashval);          
