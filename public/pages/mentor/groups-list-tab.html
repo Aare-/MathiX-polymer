@@ -12,7 +12,7 @@
     <template>
       <div class="row" layout horizontal>
         <p flex>{{model.name}}</p>
-        <paper-button on-click="{{goToGroupDetails}}"><core-icon icon="arrow-forward"></core-icon></paper-button>        
+        <paper-button group-id="{{model.id}}" on-click="{{goToGroupDetails}}"><core-icon icon="arrow-forward"></core-icon></paper-button>        
       </div>
     </template>
   </core-list>    
@@ -30,7 +30,8 @@
           });
           
       	},        
-        goToGroupDetails: function() {
+        goToGroupDetails: function(event, detail, sender) {
+          showGroupId = sender.getAttribute("group-id");          
           Navigator.switchScreen(5);
         }      
     });

@@ -50,3 +50,8 @@ paper-fab {
   height:100%; 
   overflow: auto;
 }
+
+* /deep/ .exc_img_content {
+  width: 80%;
+  height: auto;  
+}

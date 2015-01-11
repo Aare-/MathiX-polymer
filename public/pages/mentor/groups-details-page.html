@@ -1,23 +1,26 @@
-<polymer-element name="groups-details-page">
+<polymer-element name="groups-details-page" attributes="myId">
 <template>
 	<style>
 		paper-fab {
     	position: absolute;
     	left: 30px;
-    	top: 115px;
+    	top: 100px;
+      z-index: 7;
   	}      
 
     core-list {      
       width: 100%;
-      height: 300px;
-      margin: 30px 30px;    
+      height: 100%;
+      margin-top: 145px;
+
     }
 
     #header{
       width: 100%;
       height: 130px;    
       background: pink;  
-      position: relative;
+      position: absolute;
+      z-index: 6;
     }
 
     #header div.actions {
@@ -30,33 +33,40 @@
       float: right;
     }
 
+    .content_padding_top {
+      padding-top: 150px;
+    }
 	</style>
 
-  <div id="header">
-      <p>{{groupName}}</p>
-      <div class="actions">
-        <paper-button on-click="{{deleteGroup}}"><core-icon icon="delete"></core-icon></paper-button>
-        <paper-button on-click="{{editGroup}}"><core-icon icon="create"></core-icon></paper-button>
-      </div>
+  <div class="tab_scrollable_content">  
+    <div id="header">
+        <p>{{group.title}}</p>
+        <div class="actions">
+          <paper-button on-click="{{deleteGroup}}"><core-icon icon="delete"></core-icon></paper-button>
+          <paper-button on-click="{{editGroup}}"><core-icon icon="create"></core-icon></paper-button>
+        </div>
+    </div>
+    <div class="content_padding_top">
+      <template repeat="{{model in students}}">
+        <div class="row" layout horizontal>
+          <p>{{model.name}} {{model.surname}}</p>        
+        </div>
+      </template>
+    </div>
   </div>
-  <core-list data="{{students}}">
-    <template>
-      <div class="row" layout horizontal>
-        <p>{{model.name}} {{model.surname}}</p>        
-      </div>
-    </template>
-  </core-list>    
 
 	<paper-fab icon="arrow-back" title="create" on-click="{{goBack}}"></paper-fab>    
 </template>
 <script type="text/javascript">
 	Polymer("groups-details-page", {
       	ready: function() {
-          this.students = Database.getStudentsFromGroup(null);
+          context = this;          
 
           Navigator.registerCallback(function(page){
-            
-
+            if(page == context.myId) {
+              context.group = Database.getGroupById(showGroupId);              
+              context.students = Database.getStudentsFromGroup(context.group);          
+            }  
           });
       	},
         goBack: function() {

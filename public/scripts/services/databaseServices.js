@@ -34,7 +34,7 @@ var mentors = [
 	}
 ];
 
-var students_counter = 4;
+var students_counter = 8;
 var students = [
 	{
 	 id : 0,
@@ -55,7 +55,27 @@ var students = [
 	 id : 3,
 	 name : "Brienne",
  	 surname : "of Tarth"
- 	}
+ 	},
+ 	{
+	 id : 4,
+	 name : "Brienne Junior",
+ 	 surname : "of Tarth"
+ 	},
+ 	{
+	 id : 5,
+	 name : "Tyrion Junior",
+ 	 surname : "Lannister"
+ 	},
+ 	{
+	 id : 6,
+	 name : "Joffrey Junior",
+ 	 surname : "Barethon"
+ 	},
+ 	{
+	 id : 7,
+	 name : "Margaery Junior",
+ 	 surname : "Tyrell"
+ 	},
 ];
 
 var mentor_students = [
@@ -74,20 +94,48 @@ var mentor_students = [
 	{
 		mentor : 0,
 		student : 3
+	},
+	{
+		mentor : 0,
+		student : 4
+	},
+	{
+		mentor : 0,
+		student : 5
+	},
+	{
+		mentor : 0,
+		student : 6
+	},
+	{
+		mentor : 0,
+		student : 7
 	}
 ];
 
-var groups_counter = 1;
+var groups_counter = 3;
 var groups = [
 	{
 		id : 0,
 		mentor : 0,
 		visible : true,
-		name : "Testowa Grupa"
+		name : "Wszyscy"
+	},
+	{
+		id : 1,
+		mentor : 0,
+		visible : true,
+		name : "Studia"
+	},
+	{
+		id : 2,
+		mentor : 0,
+		visible : true,
+		name : "Gimbazjum"
 	}
 ];
 
-var groups_students_counter = 2;
+var groups_students_counter = 16;
 var groups_students = [
 	{
 		id : 0,
@@ -95,10 +143,81 @@ var groups_students = [
 		student : 1
 	},
 	{
-		id : 0,
+		id : 1,
 		group : 0,
 		student : 2
+	},
+	{
+		id : 2,
+		group : 0,
+		student : 3
+	},
+	{
+		id : 3,
+		group : 0,
+		student : 4
+	},
+	{
+		id : 4,
+		group : 0,
+		student : 5
+	},
+	{
+		id : 5,
+		group : 0,
+		student : 6
+	},
+	{
+		id : 6,
+		group : 0,
+		student : 7
+	},
+	{
+		id : 7,
+		group : 0,
+		student : 0
+	},
+	{
+		id : 8,
+		group : 1,
+		student : 0
+	},
+	{
+		id : 9,
+		group : 1,
+		student : 1
+	},
+	{
+		id : 10,
+		group : 1,
+		student : 2
+	},
+	{
+		id : 11,
+		group : 1,
+		student : 3
+	},
+	{
+		id : 12,
+		group : 2,
+		student : 4
+	},
+	{
+		id : 13,
+		group : 2,
+		student : 5
+	},
+	{
+		id : 14,
+		group : 2,
+		student : 6
+	},
+	{
+		id : 15,
+		group : 2,
+		student : 7
 	}
+
 ];
 
 var excercises_counter = 2;
@@ -135,6 +254,21 @@ var excercise_extra = [
 		extra : "Prosze zaprojektowac interfejs dla wyszukiwarki internetowej"
 	},			
 	{		
+		excercise : 0,
+		type : "uploaded_image",
+		extra : "images/uploads/excercises/exc_1.jpeg"
+	},		
+	{		
+		excercise : 0,
+		type : "uploaded_image",
+		extra : "images/uploads/excercises/exc_1.jpeg"
+	},		
+	{		
+		excercise : 0,
+		type : "answer",
+		extra : "56"
+	},				
+	{		
 		excercise : 1,
 		type : "text",
 		extra : "2 + 2 = ?, prosze szybko rozwiazac"
@@ -143,7 +277,12 @@ var excercise_extra = [
 		excercise : 1,
 		type : "answer",
 		extra : "4"
-	}
+	},
+	{		
+		excercise : 1,
+		type : "uploaded_image",
+		extra : "images/uploads/excercises/exc_2.jpg"
+	},		
 ];
 
 var excercise_solution_counter = 5;
@@ -245,6 +384,14 @@ var _getStudentById =
 		return null;	
 	};
 
+var _getGroupById =
+	function(id) {
+		for(var i =0 ; i < groups.length; i++)
+			if(groups[i].id == id)
+				return groups[i];
+		return null;	
+	};
+
 var _getStudents = 
 	function() {
 		var mentor = _getLoggedUsers();
@@ -302,6 +449,13 @@ var _getEvents =
 		return events_list;
 	};
 
+var _getExcerciseExtra =
+	function(excerciseId) {
+		return excercise_extra.filter(function(excercise_data, id, ar) {
+			return excercise_data.excercise == excerciseId;
+		});
+	};
+
 return {
 	getLoggedUser : _getLoggedUsers,
 
@@ -315,6 +469,8 @@ return {
 			return val.mentor == mentor.id;
 		});
 	}, 
+
+	getGroupById : _getGroupById,
 
 	addGroup : function(group) {		
 		var mentor = _getLoggedUsers();
@@ -348,8 +504,13 @@ return {
 	},
 
 	getStudentsFromGroup : function(group) {
-		//TODO: implement
-		return students;
+		var students_list = [];
+		groups_students.forEach(function(link){
+			if(link.group == group.id) 
+				students_list.push(_getStudentById(link.student))
+		});
+		
+		return students_list;
 	},
 
 	getExcercises : function() {
@@ -369,6 +530,8 @@ return {
 	},
 
 	getExcerciseById : _getExcerciseById,
+
+	getExcerciseExtra : _getExcerciseExtra,
 
 	assignExcercise : function(excercise, group) {
 		var mentor = _getLoggedUsers();

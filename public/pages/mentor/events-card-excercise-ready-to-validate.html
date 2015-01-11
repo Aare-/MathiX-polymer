@@ -11,8 +11,7 @@
 		}
 	</style>
 	<paper-shadow class="card" z="1" >
-		
-		
+	
 		<p>Nowe rozwiązanie do oceny.</p>		
   		<section>"{{eventData.excercise.title}}" przez {{eventData.student.name}} {{eventData.student.surname}}</section>  		
 
@@ -25,12 +24,12 @@
 	var excerciseToRate = null;
 	Polymer("events-card-excercise-ready-to-validate", {
       	ready: function() {      
-      		//alert("rating event: "+this.eventData+" title: "+this.eventData.excercise.title);        	
+      		
       	},
       	rateSolution : function() {
+      		//TODO: correct message passing between elements!
       		excerciseToRate = this.eventData;
-      		Navigator.switchScreen(7);
-      		//alert("rating solution id: "+this.eventData.solution.id);
+      		Navigator.switchScreen(7);      		
       	}
     });
 </script>

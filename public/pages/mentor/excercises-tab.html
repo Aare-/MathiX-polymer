@@ -58,6 +58,10 @@
         },
         goToExcerciseDetails : function(event, position, button) {
           var excerciseId = button.parentNode.getAttribute("excerciseId");
+
+          //TODO: correct message passing between elements!
+          excercise_to_show = excerciseId;
+          
           Navigator.switchScreen(6);
         },
         cancelAssigment : function() {

@@ -1,10 +1,10 @@
-<polymer-element name="excercise-details-page">
+<polymer-element name="excercise-details-page" attributes="myId">
 <template>
 	<style>
     paper-fab {
       position: absolute;
       left: 30px;
-      top: 115px;
+      top: 100px;
     }      
 
     core-list {
@@ -16,7 +16,8 @@
       width: 100%;
       height: 130px;
       background: lightgreen;
-      position: relative;
+      position: absolute;
+      top: 0px;
     }
 
     #header div.actions {
@@ -29,33 +30,54 @@
       float: right;
     }
 
+    .content_padding_top {
+      padding-top: 150px;
+    }
 	</style>
+  
+  <div class="tab_scrollable_content">    
 
-  <div id="header">
-      <p>{{excerciseTitle}}</p>
+    <div id="header">
+      <center><h1>{{excercise.title}}</h1></center>
       <div class="actions">
         <paper-button on-click="{{deleteExcercise}}"><core-icon icon="delete"></core-icon></paper-button>
         <paper-button on-click="{{editExcercise}}"><core-icon icon="create"></core-icon></paper-button>
       </div>
+    </div>
+
+    <div class="content_padding_top">
+      <template repeat="{{extra in excercise_extra}}">    
+        <template if="{{extra.type == 'text'}}">
+          Treść:<br/>
+          <h2>{{extra.extra}}</h2>
+        </template>
+        <template if="{{extra.type == 'uploaded_image'}}">
+          <center>
+            <img class="exc_img_content" src="{{extra.extra}}"/>
+          </center>
+        </template>
+        <template if="{{extra.type == 'answer'}}">
+          <div>
+            Odpowiedż:<br/>
+            <h3>{{extra.extra}}</h3>
+          </div>
+        </template>
+      </template>
+    </div>
   </div>
-  <core-list data="{{groups}}">
-    <template>
-      <div class="row" layout horizontal>
-        <p flex>{{model.name}}</p>
-        <paper-button icon="create"></paper-button>
-        <paper-button icon="bin"></paper-button> 
-      </div>
-    </template>
-  </core-list>    
 
 	<paper-fab icon="arrow-back" title="create" on-click="{{goBack}}"></paper-fab>    
 </template>
 <script type="text/javascript">
 	Polymer("excercise-details-page", {
       	ready: function() {
-          Navigator.registerCallback(function(page){
-            
+          var context = this;
 
+          Navigator.registerCallback(function(page){
+            if(context.myId == page) {
+              context.excercise = Database.getExcerciseById(excercise_to_show);
+              context.excercise_extra = Database.getExcerciseExtra(excercise_to_show);
+            }  
           });
       	},
         goBack: function() {
