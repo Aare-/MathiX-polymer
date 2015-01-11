@@ -7,11 +7,11 @@
   <div class="tab_scrollable_content">    
     <div>
       <p>Zadanie: {{eventData.excercise.title}}</p>
-      <p>Autor: {{eventData.student.name}} {{eventData.student.surname}}</p>
+      <p>Student: {{eventData.student.name}} {{eventData.student.surname}}</p>
       <paper-button on-click="{{goToExcercise}}">Zobacz zadanie</paper-button>    
       <br/>
       Ocena:
-      <paper-slider value="1" max="6" editable></paper-slider>
+      <paper-slider value="{{slider_value}}" pin="true" min="0" max="6" editable></paper-slider>
     </div>
 
     <div>
@@ -28,17 +28,24 @@
 
 	Polymer("rate-solution", {
       	ready: function() {                
-          var context = this;
+          var context = this;          
 
           Navigator.registerCallback(function(screenId){
             if(screenId == context.myId){
+              context.slider_value = 3;
               context.eventData = excerciseToRate;              
             }
           });
       	},
-        rate_done : function() {
-          Navigator.switchScreen(0);
-          Utils.showToast("Zadanie ocenione");
+        rate_done : function() {          
+          if(this.slider_value < 1 ||
+            this.slider_value > 6){
+            Utils.showToast("Prosze wystawić poprawną ocene");
+          }else{
+            Database.rateSolution(this.eventData.solution.id, this.slider_value);
+            Navigator.switchScreen(0);
+            Utils.showToast("Zadanie ocenione na "+this.slider_value);
+          } 
         },
         goToExcercise : function() {
           alert("TODO");

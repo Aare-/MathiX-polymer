@@ -271,6 +271,37 @@ var _getStudentSolution =
 		return null;
 	};
 
+var _rateSolution =
+	function(solution_id, score) {
+		var solution = _getStudentSolution(solution_id);
+		solution.score = score;
+	};
+
+var _getEvents = 
+	function () {
+		var events_list = [];
+		var mentor = _getLoggedUsers();		
+		var mentorEventNewSolutions 
+			= excercise_solutions.filter(function(solution, id, ar) {				
+				var excercise = _getExcerciseById(solution.excercise);									 
+				return mentor.id == excercise.mentor && 
+					   solution.score == 0;
+			});		
+
+		mentorEventNewSolutions.forEach(function(solution) {
+			var student = _getStudentById(solution.student);
+			var excercise = _getExcerciseById(solution.excercise);
+			events_list.push({
+				event_type : "new_solution",
+				solution : solution,
+				student : student,
+				excercise : excercise
+			});
+		});		
+
+		return events_list;
+	};
+
 return {
 	getLoggedUser : _getLoggedUsers,
 
@@ -355,29 +386,9 @@ return {
 		});
 	},
 
-	getEvents : function () {
-		var events_list = [];
-		var mentor = _getLoggedUsers();		
-		var mentorEventNewSolutions 
-			= excercise_solutions.filter(function(solution, id, ar) {				
-				var excercise = _getExcerciseById(solution.excercise);									 
-				return mentor.id == excercise.mentor && 
-					   solution.score == 0;
-			});		
+	rateSolution : _rateSolution,
 
-		mentorEventNewSolutions.forEach(function(solution) {
-			var student = _getStudentById(solution.student);
-			var excercise = _getExcerciseById(solution.excercise);
-			events_list.push({
-				event_type : "new_solution",
-				solution : solution,
-				student : student,
-				excercise : excercise
-			});
-		});		
-
-		return events_list;
-	},
+	getEvents : _getEvents,
 
 	getStudentSolution : _getStudentSolution
 

@@ -1,4 +1,4 @@
-<polymer-element name="events-tab" >
+<polymer-element name="events-tab" attributes="myId">
 <template>
 	<style>
 		
@@ -25,7 +25,12 @@
 <script type="text/javascript">
 	Polymer("events-tab", {
       	ready: function() {         	 
-          this.events = Database.getEvents();          
+          var context = this;          
+
+          Navigator.registerCallback(function(screenId) {
+            if(context.myId == screenId)
+              context.events = Database.getEvents();        
+          });  
       	},
         showToast: function() {
           Utils.showToast("Twoje ID: "+Database.getLoggedUser().hashval);          
