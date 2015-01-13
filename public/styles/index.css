@@ -1,18 +1,4 @@
-main-screen::shadow core-toolbar {
-  background: transparent;
-}
 
-main-screen::shadow paper-tabs {
-  background: transparent;
-}
-
-main-screen::shadow paper-tabs::shadow #selectionBar {
-  background-color: #ff4081;
-}
-
-main-screen::shadow paper-tabs paper-tab::shadow #ink {
-  color: #ff4081;
-}
 
 paper-fab {
   position: absolute;
