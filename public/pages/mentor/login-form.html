@@ -1,0 +1,43 @@
+<polymer-element name="login-form" attributes="onLogged">
+<template>
+	<style>	
+      .background {
+          width: 100%;
+          height: 100%;
+      }
+
+	   .container {
+          max-width: 300px;
+          width: 100%;
+          max-height: 200px;
+          margin: auto auto;
+          padding: 15px 10px;
+     }    
+
+     .container paper-input {
+          width: 100%;
+          margin: auto 0px;          
+     }
+	</style>
+	
+  <div class="background">
+    <div class="container">
+      <center><h1>MathiX</h1></center>
+      <paper-input label="login" floatingLabel></paper-input>
+      <paper-input label="hasło" floatingLabel></paper-input>      
+      <paper-button on-click="{{onLogged}}">
+          <core-icon icon="check"></core-icon>
+          zaloguj
+        </paper-button>
+    </div>
+  </div>
+    
+</template>
+<script type="text/javascript">	
+
+	Polymer("login-form", {
+      	ready: function() {            		
+      	}   
+    });
+</script>
+</polymer-element>

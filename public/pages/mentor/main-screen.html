@@ -1,8 +1,24 @@
-<polymer-element name="main-screen">
+<polymer-element name="main-screen" attributes="onLogout">
   <template>  
     <style>
       .capitalize{
         text-transform: uppercase;          
+      }
+
+      core-toolbar {
+        background: transparent;
+      }
+
+      paper-tabs {
+        background: transparent;
+      }
+
+      paper-tabs::shadow #selectionBar {
+        background-color: #ff4081;
+      }
+
+      paper-tabs paper-tab::shadow #ink {
+        color: #ff4081;
       }
     </style>
 
@@ -72,7 +88,7 @@
         </div> 
 
         <div class="content">
-          <account-details></account-details>
+          <account-details onLogout="{{onLogout}}"></account-details>
         </div>  
       </core-animated-pages>
 
