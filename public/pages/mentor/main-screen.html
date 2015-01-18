@@ -2,7 +2,7 @@
   <template>  
     <style>
       .capitalize{
-        text-transform: uppercase;          
+        font-variant: small-caps;          
       }
 
       core-toolbar {
@@ -14,18 +14,41 @@
       }
 
       paper-tabs::shadow #selectionBar {
-        background-color: #ff4081;
+        background-color: ##ffd36d;
+        height:0.2em;
+      } 
+     paper-tabs {
+        background-color: #589cc1;
+        font-size: 1.5em;
+        font-weight: bold;
+        font-family: Arial;
+        color: #022639;
       }
 
       paper-tabs paper-tab::shadow #ink {
-        color: #ff4081;
+       // color: #ffd36d;
+
+      }
+      core-menu paper-item core-icon {
+        margin-right: 1.0em;
+        color: #ebf4ff;
+        height: 2.5em;
+      }
+      core-menu paper-item {
+        margin-right: 1.0em;
+        color: white;
+      }
+
+      core-menu paper-item.core-selected {
+        background: #2a6c7f;
+
       }
     </style>
 
     <core-scaffold>
       <core-header-panel navigation flex name="scaffold">  
         <core-toolbar id="navheader">
-          <span>MathiX</span>
+          <img src="../../assets/logo.png" style="margin: auto;margin-top:10%;display: block;height: 100%;" />
         </core-toolbar>    
 
         <core-menu selected="{{selected_menu}}">    

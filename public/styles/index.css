@@ -41,3 +41,45 @@ paper-fab {
   width: 80%;
   height: auto;  
 }
+
+* /deep/ core-toolbar {
+
+    background-color: #2a6c7f;
+    font-family: 'Arial';
+
+}
+* /deep/ core-toolbar#navheader {
+
+    height:15%;
+    background-color: #012c38 ;
+    font-family: 'Arial';
+
+}
+
+* /deep/ core-header-panel {
+
+
+    background-color: #083a48;
+
+    font-family: 'Arial';
+
+}
+
+* /deep/ core-icon {
+    color: #f29312;
+    width: 32px;
+    height: 32px;
+  }
+
+  * /deep/ :host(.core-selected){
+    background-color:#2a6c7f;
+  }
+
+
+* /deep/ div.button-content {
+
+}
+* /deep/ core-header-panel#headerPanel { 
+  background-color: #ebf4ff;
+}
+
