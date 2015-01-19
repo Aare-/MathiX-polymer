@@ -1,22 +1,47 @@
 <polymer-element name="events-card-excercise-ready-to-validate" attributes="eventData">
 <template>
 	<style>
-		.card {
-  		  margin: 20px 30px;
-  		  padding: 10px 15px;		  
-		}
+    .card {
+        margin: 20px 30px;
+        background: white;   
+        display: block;
+        padding: 0.1px;
+        min-height: 12em;
+    }
 
-		.card p {
-			font-size: 20px;
-		}
+    .card .title {
+      font-size: 1.2em;
+      width: 100%;
+      margin: 1em;
+      margin-top:1em;
+      margin bottom: 10px;
+      font-family: Arial;
+      display: block;
+      }
+    .card .info {
+      font-size: 1.0em;
+      width: 100%;
+      margin: 1em;
+      margin-top:1em;
+      margin bottom: 10px;
+      font-family:  Arial;
+      font-style: italic;
+      display: block;
+    }
+    .card .buttonik{
+      position: absolute;
+      bottom: 10px;
+      min-width: 5em;
+      right: 10px;
+    }
 	</style>
 	<paper-shadow class="card" z="1" >
 	
-		<p>Nowe rozwiązanie do oceny.</p>		
-  		<section>"{{eventData.excercise.title}}" przez {{eventData.student.name}} {{eventData.student.surname}}</section>  		
+		<span class="title">Nowe rozwiązanie do oceny.</span>		
+  		<section class="info">"{{eventData.excercise.title}}" przez {{eventData.student.name}} {{eventData.student.surname}}</section>  		
 
   		<br/>
-  		<paper-button raised on-click="{{rateSolution}}">Oceń</paper-button>
+  		<paper-button class="buttonik" raised on-click="{{rateSolution}}">Oceń Zadanie</paper-button>
   		<!-- <paper-button>Przypomnij później</paper-button> -->
  	</paper-shadow>
 </template>
