@@ -40,7 +40,6 @@
     <div id="header">
       <center><h1>{{excercise.title}}</h1></center>
       <div class="actions">
-        <paper-button on-click="{{deleteExcercise}}"><core-icon icon="delete"></core-icon></paper-button>
         <paper-button on-click="{{editExcercise}}"><core-icon icon="create"></core-icon></paper-button>
       </div>
     </div>
@@ -56,12 +55,12 @@
             <img class="exc_img_content" src="{{extra.extra}}"/>
           </center>
         </template>
-        <template if="{{extra.type == 'answer'}}">
+        <!--<template if="{{extra.type == 'answer'}}">
           <div>
             Odpowiedż:<br/>
             <h3>{{extra.extra}}</h3>
           </div>
-        </template>
+        </template> -->
       </template>
     </div>
   </div>
@@ -81,7 +80,7 @@
           });
       	},
         goBack: function() {
-          Navigator.switchScreen(2);
+          Navigator.switchScreen(1);
         },
         deleteExcercise: function() {
 

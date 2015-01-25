@@ -1,16 +1,44 @@
 <polymer-element name="excercises-tab" attributes="myId">
 <template>
-	<style>
-		
+	<style>		    
+
+    core-list {
+      width: 100%;
+      height: 300px;            
+    }    
+    
 	</style>
 
-  ZADANIA
-  
+  <core-list data="{{excercises}}">
+    <template>
+      <div class="row" layout horizontal excerciseId="{{model.id}}">
+        <p flex>{{model.title}}</p>
+        
+        <paper-button on-click="{{goToExcerciseDetails}}"><core-icon icon="arrow-forward"></core-icon></paper-button>        
+      </div>
+    </template>
+  </core-list>    
+    
 </template>
-<script type="text/javascript">
+<script type="text/javascript">  
 	Polymer("excercises-tab", {
-      	ready: function() {         	                   
-      	}
+      	ready: function() {              
+          var context = this;                    
+
+          Navigator.registerCallback(function(page){
+            if(page == context.myId) {
+              context.excercises = Database.getDoneExcercises();         
+            }
+          });        	
+      	},
+        goToExcerciseDetails : function(event, position, button) {
+          var excerciseId = button.parentNode.getAttribute("excerciseId");
+
+          //TODO: correct message passing between elements!
+          excercise_to_show = excerciseId;
+          
+          Navigator.switchScreen(3);
+        }
     });
 </script>
 </polymer-element>

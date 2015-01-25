@@ -301,7 +301,7 @@ var excercise_solutions = [
 		excercise : 0,
 		accepted : 0,
 		mentor_comment : "",
-		score : 0
+		score : 4
 	},
 	{
 		id : 2,
@@ -368,11 +368,24 @@ var _getLoggedUsers =
 		return mentors[0];
 	};
 
+var _getLoggedStudents = 
+	function() {
+		return students[1];
+	};
+
 var _getExcerciseById = 
 	function(id) {
 		for(var i =0 ; i<excercises.length; i++)
 			if(excercises[i].id == id)
 				return excercises[i];
+		return null;
+	};
+
+var _getDoneExcerciseByStudent = 
+	function(student) {
+		for(var i =0 ; i<excercise_solutions.length; i++)
+			if(excercise_solutions[i].student == student)
+				return excercise_solutions[i];
 		return null;
 	};
 
@@ -449,6 +462,32 @@ var _getEvents =
 		return events_list;
 	};
 
+var _getEventsStudents = 
+	function () {
+		var events_list = [];
+		var student = _getLoggedStudents();		
+		var studentEventNewSolutions 
+			= excercise_solutions.filter(function(grade, id, ar) {				
+				var doneExcercise = _getDoneExcerciseByStudent(grade.excercise);									 
+				return student.id == doneExcercise.student && 
+					   grade.score == 0;
+			});		
+
+		studentEventNewSolutions.forEach(function(grade) {
+			var mentor = _getLoggedUsers();
+			var doneExcercise = _getDoneExcerciseByStudent(grade.excercise);
+			var excercise = _getExcerciseById(doneExcercise.excercise);
+			events_list.push({
+				event_type : "solution_rated",
+				grade : grade,
+				mentor : mentor,
+				excercise : excercise
+			});
+		});		
+
+		return events_list;
+	};
+
 var _getExcerciseExtra =
 	function(excerciseId) {
 		return excercise_extra.filter(function(excercise_data, id, ar) {
@@ -461,7 +500,9 @@ return {
 
 	getStudentById : _getStudentById,
 
-	getStudents : _getStudents,	
+	getStudents : _getStudents,
+
+	getLoggedStudent : _getLoggedStudents,
 
 	getGroups : function() {
 		var mentor = _getLoggedUsers();
@@ -520,6 +561,39 @@ return {
 		});
 	},
 
+	getExcercisesStudent : function () {
+		var i=0;
+		var student = _getLoggedStudents();
+		var doneExcercise = excercise_solutions.filter(function(val, id, ar) {
+			return val.student == student.id;
+		});
+			return excercises.filter(function(val, id, ar) {
+				for(var i = 0; i < doneExcercise.length; i++) {
+					if(val.id == doneExcercise[i].excercise)
+						return true;
+					else
+						return false;
+				}
+		});
+	},
+
+	getDoneExcercises : function () {
+		var i=0;
+		var text="Narazie nie masz żadnych zadań";
+		var student = _getLoggedStudents();
+		var doneExcercise = excercise_solutions.filter(function(val, id, ar) {
+			return val.student == student.id;
+		});
+			return excercises.filter(function(val, id, ar) {
+				for(var i = 0; i < doneExcercise.length; i++) {
+						if(val.id == doneExcercise[i].excercise) 
+							return false;
+						else
+							return true; 
+				}
+		});
+	},
+
 	addExcercise : function(excercise) {
 		var mentor = _getLoggedUsers();
 		excercises.push({
@@ -552,6 +626,8 @@ return {
 	rateSolution : _rateSolution,
 
 	getEvents : _getEvents,
+
+	getEventsStudent : _getEventsStudents,
 
 	getStudentSolution : _getStudentSolution
 

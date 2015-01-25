@@ -1,15 +1,53 @@
-<polymer-element name="main-screen">
+<polymer-element name="main-screen" attributes="onLogout">
   <template>  
     <style>
       .capitalize{
-        text-transform: uppercase;          
+        font-variant: small-caps;          
+      }
+
+      core-toolbar {
+        background: transparent;
+      }
+
+      paper-tabs {
+        background: transparent;
+      }
+
+      paper-tabs::shadow #selectionBar {
+        background-color: ##ffd36d;
+        height:0.2em;
+      } 
+     paper-tabs {
+        background-color: #589cc1;
+        font-size: 1.5em;
+        font-weight: bold;
+        font-family: Arial;
+        color: #022639;
+      }
+
+      paper-tabs paper-tab::shadow #ink {
+       // color: #ffd36d;
+
+      }
+      core-menu paper-item core-icon {
+        margin-right: 1.0em;
+        color: #ebf4ff;
+        height: 2.5em;
+      }
+      core-menu paper-item {
+        margin-right: 1.0em;
+        color: white;
+      }
+
+      core-menu paper-item.core-selected {
+        background: #2a6c7f;
       }
     </style>
 
     <core-scaffold>
       <core-header-panel navigation flex name="scaffold">  
         <core-toolbar id="navheader">
-          <span>MathiX</span>
+          <img src="../../assets/logo.png" style="margin: auto;margin-top:10%;display: block;height: 100%;" />
         </core-toolbar>    
 
         <core-menu selected="{{selected_menu}}">    
@@ -42,17 +80,22 @@
             </div>      
 
             <div class="fullHeight">
-              <excercises-tab myId="1"></excercises-tab>              
+              <excercises-tab myId="1"></excercises-tab>
             </div>          
 
-            <div class="fullHeight">                                 
-              <scores-tab myId="2"></scores-tab>              
-            </div>                              
+            <div class="fullHeight">
+              <scores-tab myId="2"></scores-tab>
+            </div>
+
+            <div class="fullHeight">
+              <excercise-details-page myId="3"></excercise-details-page>
+            </div>
+                            
           </core-animated-pages>        
         </div> 
 
         <div class="content">
-          Account details
+          <account-details onLogout="{{onLogout}}"></account-details>
         </div>  
       </core-animated-pages>
 
@@ -65,7 +108,7 @@
     var menu = null;
     var toolbarTitle = null;
     var dashboardTabs = [
-      {title : "hub"},
+      {title : "wydarzenia"},
       {title : "zadania"},
       {title : "oceny"}
     ];
@@ -75,7 +118,9 @@
       {id: 1,
        title: "dashboard"},
       {id: 2,
-       title: "dashboard"},      
+       title: "dashboard"},
+      {id: 3,
+       title: "zadanie, detale"},   
     ];
     var _menuTitles = [
       {getTitle : function() {return _dashboardPages[pages.selected].title;}},
@@ -135,6 +180,16 @@
         _globalToast = this.$.globalToast;
 
         resolveHeightIssues();
+      },
+      menuSelectAction: function() {        
+        Navigator.updateScreen();
+      },
+      mainMenuSelectAction: function() {
+        toolbarTitle.menuTitle 
+          = {value: _menuTitles[menu.selected].getTitle()};
+      },
+      goToNewExcercise: function () {
+        Navigator.switchScreen(4, "cross-fade-all");
       }
     });
       

@@ -4,13 +4,37 @@
 		
 	</style>
 
-  HUB
+  <div class="tab_scrollable_content">
+    <template repeat="{{e in events}}">
+      <hub-card-excercise-rated eventData="{{e}}"></hub-card-excercise-rated>  
+    </template>  
+  </div>
+
+  <!-- 
+  <events-card-excercise-assigned-stats
+    ctitle="Testowa Grupa - Zadanie 1" 
+    content="Wykonało zadanie:">
+  </events-card-excercise-assigned-stats>    
+  -->
+  
+  <paper-fab class="bottom_right"
+              icon="account-circle"              
+             on-click="{{showToast}}"></paper-fab>      
   
 </template>
 <script type="text/javascript">
 	Polymer("hub-tab", {
-      	ready: function() {         	                   
-      	}
+      	ready: function() {         	 
+          var context = this;          
+
+          Navigator.registerCallback(function(screenId) {
+            if(context.myId == screenId)
+              context.events = Database.getEventsStudent();        
+          });  
+      	},
+        showToast: function() {
+          Utils.showToast("Zalogowany jako: "+Database.getLoggedStudent().name);          
+        }
     });
 </script>
 </polymer-element>
