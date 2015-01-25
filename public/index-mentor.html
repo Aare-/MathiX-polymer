@@ -34,11 +34,8 @@
     <link rel="import" href="../bower_components/core-list/core-list.html"> 
     <link rel="import" href="../bower_components/core-label/core-label.html">     
     <link rel="import" href="../bower_components/paper-checkbox/paper-checkbox.html">     
-
-    <link rel="import" href="../bower_components/core-animated-pages/transitions/slide-from-right.html
-    ">        
-    <link rel="import" href="../bower_components/core-animated-pages/transitions/cross-fade.html
-    ">        
+    <link rel="import" href="../bower_components/core-animated-pages/transitions/slide-from-right.html">        
+    <link rel="import" href="../bower_components/core-animated-pages/transitions/cross-fade.html">        
     <link rel="import" href="../bower_components/core-icon-button/core-icon-button.html">
     <link rel="import" href="../bower_components/core-header-panel/core-header-panel.html">
     <link rel="import" href="../bower_components/core-overlay/core-overlay.html">                    
@@ -55,11 +52,36 @@
     <link rel="import" href="pages/mentor/groups-details-page.html">
     <link rel="import" href="pages/mentor/new-group-form.html">
     <link rel="import" href="pages/mentor/main-screen.html">                
+    <link rel="import" href="pages/mentor/login-form.html">                
 
     <link rel="stylesheet" href="styles/reset.css">    
     <link rel="stylesheet" href="styles/index.css">    
 </head>
 <body unresolved fullbleed>  
-  <main-screen></main-screen>
+    <polymer-element name="main-wrapper">
+        <template>            
+            <main-screen style="display: {{mscreen}}" onLogout="{{logoutAction}}"></main-screen>
+            <login-form style="display: {{lform}}" onLogged="{{loginAction}}"></login-form>
+        </template>
+        <script type="text/javascript">
+            ctx = null;
+            Polymer("main-wrapper", {                                
+                ready: function() {                    
+                    ctx = this;
+                    ctx.mscreen = "none";
+                    ctx.lform = "block";
+                },
+                loginAction: function() {
+                    ctx.mscreen = "block";
+                    ctx.lform = "none";
+                },
+                logoutAction: function() {
+                    ctx.mscreen = "none";
+                    ctx.lform = "block";
+                }
+            });
+        </script>
+    </polymer-element>
+    <main-wrapper></main-wrapper>        
 </body>
 </html>

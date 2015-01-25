@@ -73,7 +73,8 @@
           Navigator.switchScreen(1);
         },
         deleteGroup: function() {
-
+            Database.removeGroupById(showGroupId);
+            Navigator.switchScreen(1);
         },
         editGroup: function() {
           

@@ -51,9 +51,13 @@
       		var group_name = this.$.group_name;			
       		var newGroupName = group_name.value;      		
 
-      		Database.addGroup({name : newGroupName});
-      		Utils.showToast("Grupa '"+newGroupName+"' utworzona");
-      		Navigator.switchScreen(1, "cross-fade-all");
+          if(newGroupName.length < 1){
+            Utils.showToast("Nazwa grupy nie moze byc pusta");
+          }else{
+        		Database.addGroup({name : newGroupName});
+        		Utils.showToast("Grupa '"+newGroupName+"' utworzona");
+        		Navigator.switchScreen(1, "cross-fade-all");
+          }
       	}      
     });
 </script>

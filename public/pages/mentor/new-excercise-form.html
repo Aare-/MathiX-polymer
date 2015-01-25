@@ -1,81 +1,148 @@
-<polymer-element name="new-excercise-form" >
+<polymer-element name="new-excercise-form" attributes="myId">
 <template>
 	<style>
 		paper-button.colored {
       background: #4285f4;
       color: #fff;
     }    
-
-    .contentbox {
-      min-height: 30px;      
-      padding: 15px 15px;
-      margin: 15px 10px;
-      width: 100%;
-    }
+    
 	</style>
-	
-  <div layout horizontal center>
-    <paper-input-decorator  label="Tytuł Zadania" floatingLabel error="wymagane">
-      <input is="core-input" required>
+
+  <div style="display: {{form1_visible}};">
+    <p>Krok 1/2</p>
+    <paper-input-decorator label="Tytuł Zadania" floatingLabel error="wymagane">
+      <input is="core-input" required id="excercise_title">
     </paper-input-decorator>
-
-    <div center horizontal layout>
-      <paper-dropdown-menu label="Typ zadania">
-        <paper-dropdown class="dropdown">
-          <core-menu class="menu">
-            <template repeat="{{excercise_types}}">
-              <paper-item>{{}}</paper-item>
-            </template>
-          </core-menu>
-        </paper-dropdown>
-      </paper-dropdown-menu>    
-    </div>  
-  </div>  
-
-  <div layout vertical center>     
-    <paper-shadow z="1"  class="contentbox">
-      <div class="contentbox">        
+    <template repeat="{{e in extra1}}">
+      <div>
+        <p>{{e.position + 1}}. {{e.extra}} <paper-button mID="{{e.position}}" on-click="{{removeItem}}"><core-icon icon="delete"></core-icon></paper-button></p>
       </div>
-    </paper-shadow>
-
-    <paper-button class="colored">Dodaj Treść</paper-button>
+    </template>
+    <paper-button class="colored" on-click="{{addContent}}">      
+      Dodaj Treść Zadania
+    </paper-button>
+    <paper-button on-click="{{goToSecondPage}}">Dalej</paper-button>
   </div>
+  <div style="display: {{form2_visible}};">
+    <p>Krok 2/2</p>
 
-  <div layout vertical center> 
-    <paper-shadow class="contentbox" z="1" >
-      <div class="contentbox">        
+    <template repeat="{{e in extra2}}">
+      <div>
+        <p>{{e.position + 1}}. {{e.extra}} <paper-button mID="{{e.position}}" on-click="{{removeItem}}"><core-icon icon="delete"></core-icon></paper-button></p>
       </div>
-    </paper-shadow>    
+    </template>
 
-    <paper-button class="colored">Dodaj Rozwiązanie</paper-button>
-
-    <div layout horizontal center bottom>
-      <div>Jedno rozwiązanie</div>
-      <paper-toggle-button class="blue"></paper-toggle-button>
-      <paper-input-decorator flex label="Rozwiązanie" floatingLabel error="wymagane">
-        <input is="core-input" required>
-      </paper-input-decorator>
-    </div>
-  </div>    
-
-  <paper-fab class="bottom_right"
+    <paper-button class="colored" on-click="{{addContent}}">Dodaj Rozwiązania</paper-button>
+    <paper-button on-click="{{goToFirstPage}}">Wstecz</paper-button>
+    <paper-fab class="bottom_right"
              icon="done"              
-             on-click="{{validateAndSubmit}}"></paper-fab>      
+             on-click="{{validateAndSubmit}}"></paper-fab>          
+  </div>
+  <core-overlay id="exc_dialog" class="white" layered backdrop>
+    <div>                  
+      <paper-button on-click="{{addImage}}"><core-icon icon="add"></core-icon> Zdjęcie</paper-button>      
+    </div>
+    <div>                  
+      <paper-button on-click="{{addText}}"><core-icon icon="add"></core-icon> Tekst</paper-button>      
+    </div>
+    <div>                  
+      <paper-button on-click="{{addLink}}"><core-icon icon="add"></core-icon> Link</paper-button>      
+    </div>
+    <div>                  
+      <paper-button on-click="{{addMovie}}"><core-icon icon="add"></core-icon> Filmik</paper-button>      
+    </div>
+  </core-overlay>
 
 </template>
 <script type="text/javascript">
+  var new_exc_extra_page1;
+  var new_exc_extra_page2;
+  var act_edit_extra;
+
+  var nexCtx;
+  function _goToFirstPage() {
+    nexCtx.form1_visible = "block";
+    nexCtx.form2_visible = "none";
+
+    act_edit_extra = new_exc_extra_page1;
+  }
+
+  function _goToSecondPage() {
+    if( nexCtx.$.excercise_title.value.length <= 0)
+      Utils.showToast("Prosze wprowadzic tytul zadania");
+    else{
+      nexCtx.form1_visible = "none";
+      nexCtx.form2_visible = "block";
+
+      act_edit_extra = new_exc_extra_page2;        
+    }
+  }
+
 	Polymer("new-excercise-form", {
       	ready: function() {      
-        	this.excercise_types = [
-             "Matematyka",
-             "Język Polski",
-             "Chemia",
-             "Biologia",
-             "Inne"
-          ];
-      	},
-        validateAndSubmit: function() {
+           nexCtx = this;
+        	 Navigator.registerCallback(function(page) {
+              if(page == nexCtx.myId) {                
+                nexCtx.$.excercise_title.value = "";
+                new_exc_extra_page1 = [];
+                new_exc_extra_page2 = [];
 
+                nexCtx.extra1 = new_exc_extra_page1;
+                nexCtx.extra2 = new_exc_extra_page2;
+
+                _goToFirstPage();
+              }
+           });
+      	},
+        goToFirstPage : _goToFirstPage,
+        goToSecondPage : _goToSecondPage,        
+        validateAndSubmit: function() {
+          var title = nexCtx.$.excercise_title.value;          
+          Database.addExcercise({
+            title : title
+          });
+          Utils.showToast("Nowe zadanie dodane");
+          Navigator.switchScreen(2);
+        },
+        addContent : function() {
+          this.$.exc_dialog.open();
+        },
+        addImage: function() {
+          act_edit_extra.push({
+            type : "uploaded_image",
+            extra : "images/uploads/excercises/exc_1.jpeg",
+            position: act_edit_extra.length
+          });
+          this.$.exc_dialog.close();
+        },
+        addText: function() {
+          act_edit_extra.push({
+            type : "text",
+            extra : "Lorem ipsum...",
+            position: act_edit_extra.length
+          });
+          this.$.exc_dialog.close();
+        },
+        addLink: function() {
+          act_edit_extra.push({
+            type : "link",
+            extra : "www.onet.pl",
+            position: act_edit_extra.length
+          });
+          this.$.exc_dialog.close();
+        },
+        removeItem: function(event, position, button) {                    
+          act_edit_extra.splice(button.getAttribute("mID"), 1);
+          for(var i = 0; i<act_edit_extra.length; i++)
+            act_edit_extra[i].position = i;
+        },
+        addMovie: function() {
+          act_edit_extra.push({
+            type : "movie",
+            extra : "http://youtube.com",
+            position: act_edit_extra.length
+          });
+          this.$.exc_dialog.close();
         }
     });
 </script>

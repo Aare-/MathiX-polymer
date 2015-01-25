@@ -527,6 +527,15 @@ return {
 		return newGroup;
 	},
 
+	removeGroupById : function(groupId) {
+		for(var i = 0; i<groups.length; i++)
+			if(groups[i].id == groupId) {
+				groups.splice(i, 1);
+				return;
+			}
+		return;
+	},
+
 	addStudentToGroup : function(group, student) {
 		var mentor = _getLoggedUsers();
 		removeStudentFromGroup(mentor, group, student);

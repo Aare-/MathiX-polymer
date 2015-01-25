@@ -1,9 +1,10 @@
-<polymer-element name="account-details">
+<polymer-element name="account-details" attributes="onLogout">
 <template>
 	<style>
 		.card {
   		  margin: 20px 30px;
-  		  padding: 10px 15px;		  
+  		  padding: 10px 15px;
+  		  background: white;	  
 		}
 
 		.card p {
@@ -11,7 +12,7 @@
 		}
 	</style>
 	{{name}} {{surname}}<br>
-	<paper-button>Wyloguj się.</paper-button>
+	<paper-button on-click="{{onLogout}}">Wyloguj się.</paper-button>
 </template>
 <script type="text/javascript">
 	Polymer("account-details", {
