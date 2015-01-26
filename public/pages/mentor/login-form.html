@@ -24,7 +24,9 @@
     <div class="container">
       <center><h1>MathiX</h1></center>
       <paper-input label="login" floatingLabel></paper-input>
-      <paper-input label="hasło" floatingLabel></paper-input>      
+      <paper-input-decorator label="hasło">
+        <input type="password" floatingLabel></paper-input>   
+      </paper-input-decorator>   
       <paper-button on-click="{{onLogged}}">
           <core-icon icon="check"></core-icon>
           zaloguj
