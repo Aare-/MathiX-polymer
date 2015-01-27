@@ -40,11 +40,7 @@
       	},
         performLogin : function() {
           var loginResult = Database.loginStudent(this.$.stud_form_login.value);
-          var stud = Database.getLoggedStudent();
-          if(stud != null)
-            alert("Login: "+loginResult+" l: "+stud.id+" "+stud.name+" "+stud.surname);
-          else
-            alert("Login: "+loginResult);
+          var stud = Database.getLoggedStudent();          
           if(loginResult)
             this.onLogged();
           else
