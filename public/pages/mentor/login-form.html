@@ -6,30 +6,47 @@
           height: 100%;
       }
 
-	   .container {
+      .container {
           max-width: 300px;
           width: 100%;
-          max-height: 200px;
+          max-height: 400px;
           margin: auto auto;
-          padding: 15px 10px;
-     }    
+          padding: 15px 15px;
+          font-family: Roboto;
+      }    
 
-     .container paper-input {
+      .container paper-input {
           width: 100%;
-          margin: auto 0px;          
-     }
+          margin: auto 0px;       
+      }
+
+      .container paper-input-decorator {
+          width: 100%;
+          margin: auto 0px;    
+      }
+
+      .buttonik {
+          left: 62%;
+      }
+
 	</style>
 	
   <div class="background">
     <div class="container">
-      <center><h1>MathiX</h1></center>
-      <paper-input label="login" floatingLabel></paper-input>
-      <paper-input-decorator label="hasło">
-        <input type="password" floatingLabel></paper-input>   
-      </paper-input-decorator>   
-      <paper-button on-click="{{onLogged}}">
-          <core-icon icon="check"></core-icon>
-          zaloguj
+      <center>
+        <h1>
+          <img src="/assets/logo.png"><br>
+          MathiX
+        </h1>
+
+      </center>
+        <paper-input label="Login" floatingLabel></paper-input>
+        <paper-input-decorator label="Hasło" floatingLabel>
+          <input type="password"></paper-input> 
+        </paper-input-decorator>
+        <paper-button class="buttonik" on-click="{{onLogged}}">
+            <core-icon icon="check"></core-icon>
+            zaloguj
         </paper-button>
     </div>
   </div>
