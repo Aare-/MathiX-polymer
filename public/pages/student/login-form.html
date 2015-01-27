@@ -12,22 +12,35 @@
           max-height: 200px;
           margin: auto auto;
           padding: 15px 10px;
+          font-family: Roboto;
      }    
 
      .container paper-input {
           width: 100%;
           margin: auto 0px;          
      }
+
+     .buttonik {
+          left: 62%;
+      }
 	</style>
 	
   <div class="background">
     <div class="container">
-      <center><h1>MathiX</h1></center>
-      <paper-input label="login" id="stud_form_login" floatingLabel></paper-input>
-      <paper-input label="hasło" id="stud_form_pass" floatingLabel></paper-input>      
-      <paper-button on-click="{{performLogin}}">
-          <core-icon icon="check"></core-icon>
-          zaloguj
+      <center>
+        <h1>
+          <img src="/assets/logo.png"><br>
+          MathiX
+        </h1>
+
+      </center>
+        <paper-input label="Login" floatingLabel id="stud_form_login"></paper-input>
+        <paper-input-decorator label="Hasło" floatingLabel id="stud_form_pass">
+          <input type="password"></paper-input> 
+        </paper-input-decorator>
+        <paper-button class="buttonik" on-click="{{performLogin}}">
+            <core-icon icon="check"></core-icon>
+            zaloguj
         </paper-button>
     </div>
   </div>
