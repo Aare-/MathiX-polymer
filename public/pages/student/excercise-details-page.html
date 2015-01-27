@@ -1,11 +1,11 @@
 <polymer-element name="excercise-details-page" attributes="myId">
 <template>
 	<style>
-    paper-fab {
+    paper-fab#back {
       position: absolute;
       left: 30px;
       top: 100px;
-    }      
+    }
 
     core-list {
       width: 100%;
@@ -39,8 +39,7 @@
 
     <div id="header">
       <center><h1>{{excercise.title}}</h1></center>
-      <div class="actions">
-        <paper-button on-click="{{editExcercise}}"><core-icon icon="create"></core-icon></paper-button>
+      <div class="actions">        
       </div>
     </div>
 
@@ -60,12 +59,14 @@
             Odpowiedż:<br/>
             <h3>{{extra.extra}}</h3>
           </div>
-        </template> -->
+        </template> -->        
       </template>
+      <paper-input label="rozwiazane" id="lol_solution" floatingLabel></paper-input>      
     </div>
   </div>
 
-	<paper-fab icon="arrow-back" title="powrót" on-click="{{goBack}}"></paper-fab>    
+  <paper-fab class="bottom_right" icon="cloud-upload" title="powrót" on-click="{{submit}}"></paper-fab>    
+	<paper-fab id="back" icon="arrow-back" title="powrót" on-click="{{goBack}}"></paper-fab>      
 </template>
 <script type="text/javascript">
 	Polymer("excercise-details-page", {
@@ -75,18 +76,18 @@
           Navigator.registerCallback(function(page){
             if(context.myId == page) {
               context.excercise = Database.getExcerciseById(excercise_to_show);
-              context.excercise_extra = Database.getExcerciseExtra(excercise_to_show);
+              context.excercise_extra = Database.getExcerciseExtra(excercise_to_show);              
             }  
           });
       	},
         goBack: function() {
           Navigator.switchScreen(1);
-        },
-        deleteExcercise: function() {
+        },        
+        submit: function() {          
+          Database.submitSolution(this.$.lol_solution.value, Database.getExcerciseById(excercise_to_show));
 
-        },
-        editExcercise: function() {
-          
+          Navigator.switchScreen(1);
+          Utils.showToast("Rozwiazanie wyslane");
         }
     });
 </script>

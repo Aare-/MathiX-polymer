@@ -41,9 +41,9 @@
         performLogin : function() {
           var loginResult = Database.loginStudent(this.$.stud_form_login.value);
           var stud = Database.getLoggedStudent();          
-          if(loginResult)
+          if(loginResult){            
             this.onLogged();
-          else
+          }else
             alert("Błędny login");
         }   
     });

@@ -59,23 +59,23 @@ var orig_db = {
 	 	},
 	 	{
 		 id : 4,
-		 name : "Brienne Junior",
-	 	 surname : "of Tarth"
+		 name : "B.Junior",
+	 	 surname : "of tarth"
 	 	},
 	 	{
 		 id : 5,
-		 name : "Tyrion Junior",
-	 	 surname : "Lannister"
+		 name : "T.Junior",
+	 	 surname : "lannister"
 	 	},
 	 	{
 		 id : 6,
-		 name : "Joffrey Junior",
-	 	 surname : "Barethon"
+		 name : "J.Junior",
+	 	 surname : "barethon"
 	 	},
 	 	{
 		 id : 7,
-		 name : "Margaery Junior",
-	 	 surname : "Tyrell"
+		 name : "M.Junior",
+	 	 surname : "tyrell"
 	 	},
 	],
 
@@ -364,10 +364,14 @@ var orig_db = {
 	]
 };
 
-var databaseName = "localDatabase";
+var databaseName = "localDatabase3";
 var db = JSON.parse(localStorage.getItem(databaseName));
 function _flushDatabase() {
 	localStorage.setItem(databaseName, JSON.stringify(db));
+}
+
+function _reloadDatabase() {
+	db = JSON.parse(localStorage.getItem(databaseName));
 }
 
 if(db == null) {
@@ -405,6 +409,8 @@ var _loginStudent =
 
 var _getExcerciseById = 
 	function(id) {
+		_reloadDatabase();
+
 		for(var i =0 ; i < db.excercises.length; i++)
 			if(db.excercises[i].id == id)
 				return db.excercises[i];
@@ -413,6 +419,8 @@ var _getExcerciseById =
 
 var _getDoneExcerciseByStudent = 
 	function(student) {
+		_reloadDatabase();
+
 		for(var i =0; i < db.excercise_solutions.length; i++)
 			if(db.excercise_solutions[i].student == student)
 				return db.excercise_solutions[i];
@@ -420,7 +428,8 @@ var _getDoneExcerciseByStudent =
 	};
 
 var _getStudentById = 
-	function(id) {
+	function(id) {		
+
 		for(var i =0 ; i < db.students.length; i++)
 			if(db.students[i].id == id)
 				return db.students[i];
@@ -455,6 +464,8 @@ var _getStudents =
 
 var _getStudentSolution =
 	function(solutionId) {
+		_reloadDatabase();
+
 		for(var i = 0; i < db.excercise_solutions.length; i++)
 			if(db.excercise_solutions[i].id == solutionId)
 				return db.excercise_solutions[i];
@@ -470,6 +481,8 @@ var _rateSolution =
 
 var _getEvents = 
 	function () {
+		_reloadDatabase();
+
 		var events_list = [];
 		var mentor = _getLoggedUsers();		
 		var mentorEventNewSolutions 
@@ -493,18 +506,56 @@ var _getEvents =
 		return events_list;
 	};
 
+var _getStudentGroups = 
+	function () {
+		_reloadDatabase();
+
+		var student = _getLoggedStudents();
+		var groups = [];
+		if(student != null){
+			db.groups_students.forEach(function(ele){
+				if(ele.student == student.id)
+					groups.push(ele);
+			});
+
+			return groups;
+		}
+
+		return null;
+	};
+
+var _getStudentScores =
+	function() {		
+		_reloadDatabase();
+
+		var stud = _getLoggedStudents();
+		var sol = db.excercise_solutions.filter(function(val){
+			return val.student == stud.id && val.score > 0;
+		});
+		var retArr = [];
+		sol.forEach(function(val) {
+			retArr.push({id : val.id,
+						 score : val.score,
+					     excercise : _getExcerciseById(val.excercise)});
+		});
+
+		return retArr;
+	};
+
 var _getEventsStudents = 
 	function () {
+		_reloadDatabase();
+
 		var events_list = [];
 		var student = _getLoggedStudents();		
 		if(student == null) return;
 
 		var studentEventNewSolutions 
-			= db.excercise_solutions.filter(function(grade, id, ar) {				
-				var doneExcercise = _getDoneExcerciseByStudent(grade.excercise);									 
-				return student.id == doneExcercise.student && 
-					   grade.score == 0;
-			});		
+			= db.excercise_solutions.filter(function(solution, id, ar) {																
+				return student.id == solution.student &&
+					   solution.score >= 0;
+			});	
+
 
 		studentEventNewSolutions.forEach(function(grade) {
 			var mentor = _getLoggedUsers();
@@ -516,13 +567,15 @@ var _getEventsStudents =
 				mentor : mentor,
 				excercise : excercise
 			});
-		});		
+		});
 
 		return events_list;
 	};
 
 var _getExcerciseExtra =
 	function(excerciseId) {
+		_reloadDatabase();
+
 		return db.excercise_extra.filter(function(excercise_data, id, ar) {
 			return excercise_data.excercise == excerciseId;
 		});
@@ -538,6 +591,8 @@ return {
 	getLoggedStudent : _getLoggedStudents,
 
 	getGroups : function() {
+		_reloadDatabase();
+
 		var mentor = _getLoggedUsers();
 		return db.groups.filter(function(val, id, ar) {
 			return val.mentor == mentor.id;
@@ -573,7 +628,9 @@ return {
 		return;
 	},
 
-	addStudentToGroup : function(group, student) {
+	getStudentGroups : _getStudentGroups,
+
+	addStudentToGroup : function(group, student) {		
 		var mentor = _getLoggedUsers();
 		removeStudentFromGroup(mentor, group, student);
 		db.groups_students.push({
@@ -595,6 +652,8 @@ return {
 	},
 
 	getStudentsFromGroup : function(group) {
+		_reloadDatabase();
+
 		var students_list = [];
 		db.groups_students.forEach(function(link){
 			if(link.group == group.id) 
@@ -604,7 +663,11 @@ return {
 		return students_list;
 	},
 
+	getStudentScores : _getStudentScores,
+
 	getExcercises : function() {
+		_reloadDatabase();
+
 		var mentor = _getLoggedUsers();
 		return db.excercises.filter(function(val, id, ar) {
 			return val.mentor == mentor.id;
@@ -612,6 +675,8 @@ return {
 	},
 
 	getExcercisesStudent : function () {
+		_reloadDatabase();
+
 		var i=0;
 		var student = _getLoggedStudents();
 		var doneExcercise = db.excercise_solutions.filter(function(val, id, ar) {
@@ -628,6 +693,8 @@ return {
 	},
 
 	getDoneExcercises : function () {
+		_reloadDatabase();
+
 		var i=0;
 		var text="Narazie nie masz żadnych zadań";
 		var student = _getLoggedStudents();
@@ -644,7 +711,34 @@ return {
 		});
 	},
 
+	getStudentExcercises : function() {
+		_reloadDatabase();
+
+		var studGroups = _getStudentGroups(_getLoggedStudents());
+		console.log("groups: "+studGroups);
+
+		var excercList = db.assigned_excercises.filter(function(val, id, ar) {
+			for(var i=0; i<studGroups.length; i++)
+				if(studGroups[i].group == val.group)
+					return true;
+			return false;
+		});
+		console.log("excL: "+excercList);
+
+		var titles = db.excercises.filter(function(val, id, ar) {
+			for(var i = 0; i < excercList.length; i++)
+				if(val.id == excercList[i].excercise)
+					return true;
+				return false;
+		});
+		console.log("titles: "+titles);	
+
+		return titles;
+	},
+
 	addExcercise : function(excercise) {
+		_reloadDatabase();
+
 		var mentor = _getLoggedUsers();
 		db.excercises.push({
 			id : db.excercises_counter++,
@@ -660,6 +754,8 @@ return {
 	getExcerciseExtra : _getExcerciseExtra,
 
 	assignExcercise : function(excercise, group) {
+		_reloadDatabase();
+
 		var mentor = _getLoggedUsers();
 		db.assigned_excercises.push({
 			excercise : excercise.id,
@@ -671,6 +767,8 @@ return {
 	},
 
 	getAssignedExcercises : function() {
+		_reloadDatabase();
+
 		var mentor = _getLoggedUsers();
 		return db.assigned_excercises.filter(function(val, id, ar) {
 			return val.mentor = mentor.id;
@@ -680,6 +778,18 @@ return {
 	rateSolution : _rateSolution,
 
 	getEvents : _getEvents,
+
+	submitSolution : function(solution, excercise) {
+		db.excercise_solutions.push({
+			id : db.excercise_solution_counter++,
+			student : _getLoggedStudents().id,
+			excercise : excercise.id,
+			accepted : 0,
+			mentor_comment : "",
+			score : 0
+		});
+		_flushDatabase();
+	},
 
 	getEventsStudent : _getEventsStudents,
 

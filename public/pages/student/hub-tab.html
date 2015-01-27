@@ -5,9 +5,8 @@
 	</style>
 
   <div class="tab_scrollable_content">
-    <template repeat="{{e in events}}">
-      <hub-card-excercise-rated eventData="{{e}}"></hub-card-excercise-rated>  
-    </template>  
+    <h1>Witaj {{user}}</h1>
+    <img src="/images/hub.jpeg"/>
   </div>
   
 </template>
@@ -15,11 +14,13 @@
 	Polymer("hub-tab", {
       	ready: function() {         	 
           var context = this;          
-
-          Navigator.registerCallback(function(screenId) {
-            if(context.myId == screenId)
-              context.events = Database.getEventsStudent();        
-          });  
+          Navigator.registerCallback(function(page){
+            if(page == context.myId){
+              var user = Database.getLoggedStudent();
+              if(user != null)
+                context.user = user.name+" "+Database.getLoggedStudent().surname;            
+            }
+          });
       	}
     });
 </script>

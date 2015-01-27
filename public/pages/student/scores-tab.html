@@ -9,12 +9,11 @@
     
 	</style>
 
-  <core-list data="{{excercises}}">
+  <core-list data="{{scores}}">
     <template>
       <div class="row" layout horizontal excerciseId="{{model.id}}">
-        <p flex>{{model.title}} -> Ocena</p>
-               
-      </div>
+        <p flex>{{model.excercise.title}}: {{model.score}}</p>
+      </div>               
     </template>
   </core-list>    
     
@@ -26,7 +25,7 @@
 
           Navigator.registerCallback(function(page){
             if(page == context.myId) {
-              context.excercises = Database.getExcercisesStudent();            
+              context.scores = Database.getStudentScores();            
             }
           });        	
       	},

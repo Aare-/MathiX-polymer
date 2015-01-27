@@ -40,6 +40,7 @@
   </core-overlay>
 </template>
 <script type="text/javascript">  
+  var _lolexId;
 	Polymer("excercises-tab", {
       	ready: function() {              
           var context = this;                    
@@ -53,6 +54,7 @@
       	},
         assignExcerciseChooseGroups : function(event, position, button) {
           var excerciseId = button.parentNode.getAttribute("excerciseId");          
+          _lolexId = excerciseId;
           this.groups = Database.getGroups();
           this.$.dialog.toggle();          
         },
@@ -67,8 +69,15 @@
         cancelAssigment : function() {
           this.$.dialog.close();
         },
-        performAssigment : function(event, position, button) {
-          var excerciseId = button.parentNode.getAttribute("excerciseId");                    
+        performAssigment : function(event, position, button) {          
+          var excerciseId = _lolexId;                    
+          var exc = Database.getExcerciseById(excerciseId);
+          var gr = Database.getGroupById(0);
+
+          console.log("Adding exc: "+exc+" id: "+excerciseId+" group: "+gr);
+
+          Database.assignExcercise(exc, gr);
+
           this.$.dialog.close();
           Utils.showToast("Zadanie zadane.");
         }
