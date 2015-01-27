@@ -66,9 +66,10 @@ paper-fab {
 }
 
 * /deep/ core-icon {
-    color: #f29312;
+    color: black;
     width: 32px;
     height: 32px;
+    background: ##ffd36d;
   }
 
   * /deep/ :host(.core-selected){
@@ -83,3 +84,6 @@ paper-fab {
   background-color: #ebf4ff;
 }
 
+* /deep/ paper-fab{
+    background: #ffd36d;
+  }
