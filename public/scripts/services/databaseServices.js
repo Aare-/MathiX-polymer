@@ -387,9 +387,20 @@ var _getLoggedStudents =
 		return db.students[__loggedStudentId];
 	};
 
-var _setLoggedStudent = 
-	function(studentId) {
-		__loggedStudentId = studentId;
+var _loginStudent = 
+	function(studentLogin) {
+		var cnt = -1;
+		if(studentLogin.length < 1)
+			return false;
+		studentLogin = studentLogin.replace(/\s/g, '');
+		db.students.forEach(function(s){
+			cnt++;
+			var testN = (s.name+s.surname).replace(/\s/g, '');
+			if(testN.indexOf(studentLogin) > -1)
+				__loggedStudentId = cnt;			
+		});		
+
+		return __loggedStudentId >= 0;
 	};
 
 var _getExcerciseById = 
@@ -486,6 +497,8 @@ var _getEventsStudents =
 	function () {
 		var events_list = [];
 		var student = _getLoggedStudents();		
+		if(student == null) return;
+
 		var studentEventNewSolutions 
 			= db.excercise_solutions.filter(function(grade, id, ar) {				
 				var doneExcercise = _getDoneExcerciseByStudent(grade.excercise);									 
@@ -530,6 +543,8 @@ return {
 			return val.mentor == mentor.id;
 		});
 	}, 
+
+	loginStudent : _loginStudent,
 
 	getGroupById : _getGroupById,
 

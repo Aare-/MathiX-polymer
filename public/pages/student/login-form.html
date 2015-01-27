@@ -23,9 +23,9 @@
   <div class="background">
     <div class="container">
       <center><h1>MathiX</h1></center>
-      <paper-input label="login" floatingLabel></paper-input>
-      <paper-input label="hasło" floatingLabel></paper-input>      
-      <paper-button on-click="{{onLogged}}">
+      <paper-input label="login" id="stud_form_login" floatingLabel></paper-input>
+      <paper-input label="hasło" id="stud_form_pass" floatingLabel></paper-input>      
+      <paper-button on-click="{{performLogin}}">
           <core-icon icon="check"></core-icon>
           zaloguj
         </paper-button>
@@ -37,7 +37,19 @@
 
 	Polymer("login-form", {
       	ready: function() {            		
-      	}   
+      	},
+        performLogin : function() {
+          var loginResult = Database.loginStudent(this.$.stud_form_login.value);
+          var stud = Database.getLoggedStudent();
+          if(stud != null)
+            alert("Login: "+loginResult+" l: "+stud.id+" "+stud.name+" "+stud.surname);
+          else
+            alert("Login: "+loginResult);
+          if(loginResult)
+            this.onLogged();
+          else
+            alert("Błędny login");
+        }   
     });
 </script>
 </polymer-element>
