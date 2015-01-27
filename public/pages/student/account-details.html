@@ -1,0 +1,26 @@
+<polymer-element name="account-details" attributes="onLogout">
+<template>
+	<style>
+		.card {
+  		  margin: 20px 30px;
+  		  padding: 10px 15px;
+  		  background: white;	  
+		}
+
+		.card p {
+			font-size: 20px;
+		}
+	</style>
+	{{name}} {{surname}}<br>
+	<paper-button on-click="{{onLogout}}">Wyloguj się.</paper-button>
+</template>
+<script type="text/javascript">
+	Polymer("account-details", {
+      	ready: function() {      
+
+        	this.name = " ";//Database.getLoggedStudent().name;
+        	this.surname = " ";//Database.getLoggedStudent().surname;
+      	}      
+    });
+</script>
+</polymer-element>

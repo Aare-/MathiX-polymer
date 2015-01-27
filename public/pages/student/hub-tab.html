@@ -4,12 +4,23 @@
 		
 	</style>
 
-  HUB
+  <div class="tab_scrollable_content">
+    <h1>Witaj {{user}}</h1>
+    <img src="/images/hub.jpeg"/>
+  </div>
   
 </template>
 <script type="text/javascript">
 	Polymer("hub-tab", {
-      	ready: function() {         	                   
+      	ready: function() {         	 
+          var context = this;          
+          Navigator.registerCallback(function(page){
+            if(page == context.myId){
+              var user = Database.getLoggedStudent();
+              if(user != null)
+                context.user = user.name+" "+Database.getLoggedStudent().surname;            
+            }
+          });
       	}
     });
 </script>

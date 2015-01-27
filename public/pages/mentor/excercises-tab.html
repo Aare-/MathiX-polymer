@@ -3,10 +3,22 @@
 	<style>		    
 
     core-list {
-      width: 100%;
-      height: 300px;            
-    }    
-    
+      width: 98%;
+      height: 500px; 
+      margin: 1%;
+    }
+    core-list div.row {
+      width: 90%;
+      height: 50px;
+      min-height: 50px;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.2);
+      background: white;   
+      display: block;
+    }
+    core-list div.row p{
+      margin-left: 15px;
+    }
+
 	</style>
 
   <core-list data="{{excercises}}">
@@ -40,6 +52,7 @@
   </core-overlay>
 </template>
 <script type="text/javascript">  
+  var _lolexId;
 	Polymer("excercises-tab", {
       	ready: function() {              
           var context = this;                    
@@ -53,6 +66,7 @@
       	},
         assignExcerciseChooseGroups : function(event, position, button) {
           var excerciseId = button.parentNode.getAttribute("excerciseId");          
+          _lolexId = excerciseId;
           this.groups = Database.getGroups();
           this.$.dialog.toggle();          
         },
@@ -67,8 +81,15 @@
         cancelAssigment : function() {
           this.$.dialog.close();
         },
-        performAssigment : function(event, position, button) {
-          var excerciseId = button.parentNode.getAttribute("excerciseId");                    
+        performAssigment : function(event, position, button) {          
+          var excerciseId = _lolexId;                    
+          var exc = Database.getExcerciseById(excerciseId);
+          var gr = Database.getGroupById(0);
+
+          console.log("Adding exc: "+exc+" id: "+excerciseId+" group: "+gr);
+
+          Database.assignExcercise(exc, gr);
+
           this.$.dialog.close();
           Utils.showToast("Zadanie zadane.");
         }

@@ -1,0 +1,61 @@
+<polymer-element name="hub-card-excercise-rated" attributes="eventData">
+<template>
+	<style>
+    .card {
+        margin: 20px 30px;
+        background: white;   
+        display: block;
+        padding: 0.1px;
+        min-height: 12em;
+    }
+
+    .card .title {
+      font-size: 1.2em;
+      width: 100%;
+      margin: 1em;
+      margin-top:1em;
+      margin bottom: 10px;
+      font-family: Arial;
+      display: block;
+      }
+    .card .info {
+      font-size: 1.0em;
+      width: 100%;
+      margin: 1em;
+      margin-top:1em;
+      margin bottom: 10px;
+      font-family:  Arial;
+      font-style: italic;
+      display: block;
+    }
+    .card .buttonik{
+      position: absolute;
+      bottom: 10px;
+      min-width: 5em;
+      right: 10px;
+    }
+	</style>
+	<paper-shadow class="card" z="1" >
+	
+		<span class="title">Zadanie ocenione.</span>		
+  		<section class="info">"{{eventData.excercise.title}}" przez {{eventData.mentor.name}} {{eventData.mentor.surname}}</section>  		
+
+  		<br/>
+  		<paper-button class="buttonik" raised on-click="{{goToGrades}}">Sprawdź ocenę</paper-button>
+  		<!-- <paper-button>Przypomnij później</paper-button> -->
+ 	</paper-shadow>
+</template>
+<script type="text/javascript">
+	var excerciseToRate = null;
+	Polymer("hub-card-excercise-rated", {
+      	ready: function() {      
+      		
+      	},
+      	goToGrades : function() {
+      		//TODO: correct message passing between elements!
+      		//excerciseToRate = this.eventData;
+      		Navigator.switchScreen(2);      		
+      	}
+    });
+</script>
+</polymer-element>
